@@ -26,10 +26,10 @@ class ReservationServiceImplTest {
     @InjectMocks
     ReservationService service;
 
-    @BeforeEach
+    /*@BeforeEach
     void setMockRepo(){
         when(mockRepo.findAll()).thenReturn(createMockIterable());
-    }
+    }*/
 
     @Test
     void getAllReservations() {
