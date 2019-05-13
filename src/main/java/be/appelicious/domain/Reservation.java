@@ -1,7 +1,7 @@
 package be.appelicious.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
