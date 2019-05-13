@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Time;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class ReservationServiceImplTest {
 
     @Mock
@@ -30,7 +33,8 @@ class ReservationServiceImplTest {
 
     @Test
     void getAllReservations() {
-        assertEquals(createMockIterable(), service.getAllReservations());
+        assertEquals("True", "False");
+        //assertEquals(createMockIterable(), service.getAllReservations());
     }
 
     private Iterable<Reservation> createMockIterable(){
