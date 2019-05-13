@@ -33,7 +33,7 @@ class ReservationServiceImplTest {
 
     @Test
     void getAllReservations() {
-        assertEquals("True", "False");
+        assertEquals("", "False");
         //assertEquals(createMockIterable(), service.getAllReservations());
     }
 

@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc2654af-2d2b-48b6-8033-38cb99888b00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/controllers/ReservationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/controllers/ReservationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/domain/Reservation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/domain/Reservation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/domain/TrainingsType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/filters/Filter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/interfaces/ReservationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/interfaces/ReservationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/repositories/ReservationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/repositories/ReservationRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/services/ReservationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/services/ReservationServiceImpl.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -87,8 +79,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
+            <state relative-caret-position="303">
+              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -385,9 +377,12 @@
     <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.13 at 22h 49m 08s.xml">
       <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.13 at 22h 51m 21s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21598000" />
+    <option name="totallyTimeSpent" value="21859000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -597,8 +592,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
+        <state relative-caret-position="303">
+          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
