@@ -19,6 +19,9 @@ import java.util.List;
 @SpringBootTest
 public class ReservationServiceImplTest {
 
+    public ReservationServiceImplTest() {
+    }
+
     @Mock
     private ReservationRepository mockRepo;
 
@@ -31,7 +34,7 @@ public class ReservationServiceImplTest {
     }*/
 
     @Test
-    void getAllReservations() {
+    public void getAllReservations() {
         assertEquals("", "False");
         //assertEquals(createMockIterable(), service.getAllReservations());
     }
