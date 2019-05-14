@@ -3,20 +3,19 @@ package be.appelicious.services;
 import be.appelicious.domain.Reservation;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.ReservationRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.sql.Time;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import static org.mockito.Mockito.when;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 class ReservationServiceImplTest {
 
