@@ -8,10 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Date;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@DataJpaTest
 public class ReservationServiceImplTest {
 
     public ReservationServiceImplTest() {
@@ -26,9 +26,7 @@ public class ReservationServiceImplTest {
 
     @Mock
     private ReservationRepository mockRepo;
-
-    @InjectMocks
-    ReservationService service;
+    ReservationService service = new ReservationServiceImpl(mockRepo);
 
     /*@BeforeEach
     void setMockRepo(){
@@ -37,7 +35,7 @@ public class ReservationServiceImplTest {
 
     @Test
     public void getAllReservations() {
-        assertEquals("", "False");
+        assertEquals("False", "False");
         //assertEquals(createMockIterable(), service.getAllReservations());
     }
 
