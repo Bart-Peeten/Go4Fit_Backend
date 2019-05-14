@@ -3,7 +3,7 @@ package be.appelicious.services;
 import be.appelicious.domain.Reservation;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.ReservationRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
