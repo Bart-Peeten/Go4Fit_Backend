@@ -17,7 +17,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-class ReservationServiceImplTest {
+public class ReservationServiceImplTest {
 
     @Mock
     private ReservationRepository mockRepo;
