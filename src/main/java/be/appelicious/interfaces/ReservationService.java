@@ -2,7 +2,9 @@ package be.appelicious.interfaces;
 
 import be.appelicious.domain.Reservation;
 
+import java.util.List;
+
 public interface ReservationService {
 
-    Iterable<Reservation> getAllReservations();
+    List<Reservation> getAllReservations();
 }

@@ -6,6 +6,8 @@ import be.appelicious.repositories.ReservationRepository;
 import org.mockito.Mock;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
@@ -16,7 +18,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Iterable<Reservation> getAllReservations() {
+    public List<Reservation> getAllReservations() {
         return repo.findAll();
     }
 }

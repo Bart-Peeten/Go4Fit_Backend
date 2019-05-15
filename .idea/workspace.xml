@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc2654af-2d2b-48b6-8033-38cb99888b00" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+            <state relative-caret-position="172">
+              <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#420#421#0" expanded="true" />
@@ -79,11 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="-339">
+              <caret line="4" column="57" selection-start-line="4" selection-start-column="57" selection-end-line="4" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -92,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="203">
-              <caret line="82" column="21" lean-forward="true" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+              <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -100,8 +101,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+            <state relative-caret-position="160">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -109,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+            <state relative-caret-position="160">
+              <caret line="8" column="60" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -145,11 +149,11 @@
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/domain/Customer.java" />
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/domain/Reservation.java" />
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/filters/Filter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" />
         <option value="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" />
       </list>
     </option>
@@ -317,7 +321,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ReservationServiceImplTest.getAllReservations">
+  <component name="RunManager" selected="JUnit.ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations">
     <configuration name="ReservationServiceImplTest.getAllReservations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Go4Fit_backend" />
       <extension name="coverage">
@@ -329,6 +333,38 @@
       <option name="PACKAGE_NAME" value="be.appelicious.services" />
       <option name="MAIN_CLASS_NAME" value="be.appelicious.services.ReservationServiceImplTest" />
       <option name="METHOD_NAME" value="getAllReservations" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Go4Fit_backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="be.appelicious.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="be.appelicious.services" />
+      <option name="MAIN_CLASS_NAME" value="be.appelicious.services.ReservationServiceImplTest" />
+      <option name="METHOD_NAME" value="getAllReservationsShouldReturnIterableOfReservations" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Go4Fit_backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="be.appelicious.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="be.appelicious.services" />
+      <option name="MAIN_CLASS_NAME" value="be.appelicious.services.ReservationServiceImplTest" />
+      <option name="METHOD_NAME" value="getAllReservations_ShouldReturnIterableOfReservations" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -349,6 +385,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" />
+        <item itemvalue="JUnit.ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" />
         <item itemvalue="JUnit.ReservationServiceImplTest.getAllReservations" />
         <item itemvalue="Spring Boot.Go4FitMain" />
       </list>
@@ -374,30 +412,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.13 at 22h 49m 08s.xml">
+    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 22h 15m 08s.xml">
       <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.13 at 22h 51m 21s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservationsShouldReturnIterableOfReservations - 2019.05.14 at 22h 16m 29s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 21h 48m 20s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservationsShouldReturnIterableOfReservations - 2019.05.14 at 22h 16m 50s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 22h 05m 48s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservationsShouldReturnIterableOfReservations - 2019.05.14 at 22h 28m 18s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 22h 08m 48s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservationsShouldReturnIterableOfReservations - 2019.05.14 at 22h 30m 20s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservationsShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 22h 09m 18s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservations_ShouldReturnIterableOfReservations - 2019.05.15 at 21h 50m 04s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReservationServiceImplTest_getAllReservations - 2019.05.14 at 22h 09m 38s.xml">
-      <configuration name="ReservationServiceImplTest.getAllReservations" configurationId="JUnit" />
+    <history-entry file="ReservationServiceImplTest_getAllReservations_ShouldReturnIterableOfReservations - 2019.05.15 at 21h 57m 14s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ReservationServiceImplTest_getAllReservations_ShouldReturnIterableOfReservations - 2019.05.15 at 21h 57m 54s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ReservationServiceImplTest_getAllReservations_ShouldReturnIterableOfReservations - 2019.05.15 at 21h 58m 23s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ReservationServiceImplTest_getAllReservations_ShouldReturnIterableOfReservations - 2019.05.15 at 22h 00m 29s.xml">
+      <configuration name="ReservationServiceImplTest.getAllReservations_ShouldReturnIterableOfReservations" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23692000" />
+    <option name="totallyTimeSpent" value="26006000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -413,7 +460,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" auto_hide="true" id="Run" order="2" visible="true" weight="0.4260274" />
+      <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.4260274" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -488,13 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/controllers/CustomerController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -555,30 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="39" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#420#421#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#323#324#0" expanded="true" />
-            <element signature="e#350#351#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -601,17 +617,48 @@
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
-          <caret line="82" column="21" lean-forward="true" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="60" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#420#421#0" expanded="true" />
+            <element signature="e#451#452#0" expanded="true" />
+            <element signature="e#323#324#0" expanded="true" />
+            <element signature="e#350#351#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-339">
+          <caret line="4" column="57" selection-start-line="4" selection-start-column="57" selection-end-line="4" selection-end-column="57" />
         </state>
       </provider>
     </entry>
