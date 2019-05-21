@@ -1,8 +1,9 @@
 package be.appelicious.domain;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,22 +17,22 @@ public class Reservation {
     private long id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "time")
-    private Time time;
+    private LocalTime time;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "go4fit_reservation_customer",
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "customerId")})
-    private Set<Customer> customers = new HashSet<Customer>();
+    private List<Customer> customers = new ArrayList<>();
 
-    public Set<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(Set<Customer> customers) {
+    public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
 
@@ -43,19 +44,19 @@ public class Reservation {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 }

@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Go4FitMain {
 
     public static void main(String[] args) {
-
         SpringApplication.run(Go4FitMain.class, args);
-
     }
 }
