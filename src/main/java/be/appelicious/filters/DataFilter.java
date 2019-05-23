@@ -2,13 +2,13 @@ package be.appelicious.filters;
 
 import be.appelicious.domain.Customer;
 import be.appelicious.domain.Reservation;
-import be.appelicious.interfaces.Filter;
+import be.appelicious.interfaces.Filters;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DataFilter implements Filter {
+public class DataFilter implements Filters {
 
     public List<String> extractFirstAndLastNamesFromReservations(List<Reservation> reservations){
         List<String> customers = new ArrayList<>();

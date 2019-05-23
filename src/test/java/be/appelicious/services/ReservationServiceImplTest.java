@@ -2,7 +2,8 @@ package be.appelicious.services;
 
 import be.appelicious.domain.Customer;
 import be.appelicious.domain.Reservation;
-import be.appelicious.interfaces.Filter;
+import be.appelicious.filters.DataFilter;
+import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.ReservationRepository;
 import org.junit.Before;
@@ -13,13 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
-import java.sql.Time;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -31,8 +28,7 @@ public class ReservationServiceImplTest {
 
     @Mock
     private ReservationRepository mockRepo;
-    @Autowired
-    private Filter filter;
+    private Filters filter;
     private ReservationService service;
     private LocalDate date;
     private LocalTime time;
@@ -40,6 +36,7 @@ public class ReservationServiceImplTest {
     private long randomNumber;
 
     public ReservationServiceImplTest() {
+        this.filter = new DataFilter();
     }
 
     @Before
@@ -50,7 +47,7 @@ public class ReservationServiceImplTest {
         this.randomNumber = generateRandomNumber();
         when(mockRepo.findAll()).thenReturn(this.reservationList);
         when(mockRepo.findAllByDateAndTime(date, time)).thenReturn(null);
-        when(mockRepo.count()).thenReturn(this.randomNumber);
+        when(mockRepo.countAllByDateAndTime(this.date, this.time)).thenReturn(this.randomNumber);
         this.service = new ReservationServiceImpl(mockRepo, filter);
     }
 

@@ -1,8 +1,7 @@
 package be.appelicious.services;
 
-import be.appelicious.domain.Customer;
 import be.appelicious.domain.Reservation;
-import be.appelicious.interfaces.Filter;
+import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,9 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 
     private ReservationRepository repo;
-    private Filter filter;
+    private Filters filter;
 
-    public ReservationServiceImpl(ReservationRepository repo, Filter filter) {
+    public ReservationServiceImpl(ReservationRepository repo, Filters filter) {
         this.repo = repo;
         this.filter = filter;
     }
