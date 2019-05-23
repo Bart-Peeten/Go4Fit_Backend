@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/users")
 public class CustomerController {
 
-    public ResponseEntity doesUserExsist(Customer user){
+    public ResponseEntity<Boolean> doesUserExsist(Customer user){
         return null;
     }
 
