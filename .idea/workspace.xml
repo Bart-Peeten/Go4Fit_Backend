@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc2654af-2d2b-48b6-8033-38cb99888b00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/filters/DataFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/Go4FitMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/Go4FitMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/aspects/GetAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/aspects/GetAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/domain/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/domain/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/repositories/ReservationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/Go4FitMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/Go4FitMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/aspects/GetAspect.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/aspects/GetAspect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/controllers/ReservationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/controllers/ReservationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/domain/Reservation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/domain/Reservation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/interfaces/ReservationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/interfaces/ReservationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/repositories/ReservationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/repositories/ReservationRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/be/appelicious/services/ReservationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/be/appelicious/services/ReservationServiceImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="cc2654af-2d2b-48b6-8033-38cb99888b00" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,7 +21,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
+            <state relative-caret-position="192">
               <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -80,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="363">
-              <caret line="51" column="84" selection-start-line="51" selection-start-column="84" selection-end-line="51" selection-end-column="84" />
+              <caret line="50" column="73" selection-start-line="50" selection-start-column="73" selection-end-line="50" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#323#324#0" expanded="true" />
@@ -100,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/filters/DataFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="18" column="71" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
+            <state relative-caret-position="280">
+              <caret line="14" column="81" selection-start-line="14" selection-start-column="81" selection-end-line="14" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -198,8 +177,8 @@
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/domain/Reservation.java" />
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/interfaces/Filter.java" />
         <option value="$PROJECT_DIR$/src/test/java/be/appelicious/services/ReservationServiceImplTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/be/appelicious/filters/DataFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -279,6 +258,15 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="appelicious" type="462c0819:PsiDirectoryNode" />
               <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Go4Fit_backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Go4Fit_backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="appelicious" type="462c0819:PsiDirectoryNode" />
+              <item name="filters" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Go4Fit_backend" type="b2602c69:ProjectViewProjectNode" />
@@ -477,13 +465,12 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39824000" />
+    <option name="totallyTimeSpent" value="40054000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4979592" visible="true" weight="0.2657512" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4979592" visible="true" weight="0.2657512" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -680,9 +667,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/filters/DataFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="81" selection-start-line="14" selection-start-column="81" selection-end-line="14" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/controllers/ReservationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
+        <state relative-caret-position="192">
           <caret line="60" column="25" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -695,7 +692,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/services/ReservationServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
-          <caret line="51" column="84" selection-start-line="51" selection-start-column="84" selection-end-line="51" selection-end-column="84" />
+          <caret line="50" column="73" selection-start-line="50" selection-start-column="73" selection-end-line="50" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#323#324#0" expanded="true" />
@@ -706,16 +703,6 @@
             <element signature="e#1137#1138#0" expanded="true" />
             <element signature="e#1655#1656#0" expanded="true" />
             <element signature="e#1700#1701#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/be/appelicious/filters/DataFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="71" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
