@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class DataFilter implements Filters {
 
-    public List<String> extractFirstAndLastNamesFromReservations(List<Reservation> reservations){
+    public List<String> filterFullName(List<Reservation> reservations){
         List<String> customers = new ArrayList<>();
         List<Customer> reservationCustomers = reservations.get(0).getCustomers();
         for (int i = 0; i < reservationCustomers.size(); i++){

@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface Filters {
 
-    List<String> extractFirstAndLastNamesFromReservations(List<Reservation> reservations);
+    List<String> filterFullName (List<Reservation> reservations);
 }

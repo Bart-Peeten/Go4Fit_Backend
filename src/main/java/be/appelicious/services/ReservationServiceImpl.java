@@ -49,7 +49,7 @@ public class ReservationServiceImpl implements ReservationService {
     public List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time) {
         List<Reservation> result = repo.findAllByDateAndTime(date, time);
 
-        return filter.extractFirstAndLastNamesFromReservations(result);
+        return filter.filterFullName(result);
     }
 
     @Override
