@@ -29,8 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder())
                 .dataSource(ds)
                 .usersByUsernameQuery(
-                        "SELECT u.userId, u.password, u.enabled FROM go4fit_customer u where u.userId = ?")
+                        "SELECT u.userId, u.email, u.password, u.enabled FROM go4fit_customer u where u.email = ?")
                 .authoritiesByUsernameQuery(
-                        "SELECT u.userId, u.role from go4fit_customer u where u.userId = ?");
+                        "SELECT u.userId, u.role, u.email from go4fit_customer u where u.email = ?");
     }
 }
