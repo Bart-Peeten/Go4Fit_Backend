@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.controllers</a> &gt; <span class="el_source">ReservationController.java</span></div><h1>ReservationController.java</h1><pre class="source lang-java linenums">package be.appelicious.controllers;
+
+import be.appelicious.domain.Reservation;
+import be.appelicious.interfaces.ReservationService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+@RestController
+@RequestMapping(path = &quot;api/reservation&quot;)
+public class ReservationController {
+
+    private ReservationService service;
+
+<span class="nc" id="L21">    public ReservationController(ReservationService reservationService) {</span>
+<span class="nc" id="L22">        this.service = reservationService;</span>
+<span class="nc" id="L23">    }</span>
+
+    @GetMapping(path = &quot;/&quot;)
+    @Transactional(readOnly = true)
+    public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getAllReservations() {
+<span class="nc" id="L28">        List&lt;Reservation&gt; reservation = service.getAllReservations();</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (reservation.spliterator().getExactSizeIfKnown() &gt; 0){</span>
+<span class="nc" id="L31">            return new ResponseEntity&lt;&gt;(reservation, HttpStatus.OK);</span>
+        } else {
+<span class="nc" id="L33">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @GetMapping(path = &quot;/{id}&quot;)
+    public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationById(@PathVariable long id) {
+<span class="nc" id="L39">        return new ResponseEntity&lt;&gt;(service.getReservationById(id), HttpStatus.OK);</span>
+    }
+
+    @GetMapping(path = &quot;/date&quot;)
+    public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationsByDate(@RequestParam(&quot;date&quot;)
+                                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                   LocalDate date) {
+
+<span class="nc" id="L47">        return new ResponseEntity&lt;&gt;(service.getReservationByDate(date), HttpStatus.OK);</span>
+    }
+
+    @GetMapping(path = &quot;/date_time&quot;)
+    public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationByDateAndTime(@RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                         LocalDate date,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                         LocalTime time){
+<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(service.getReservationsByDateAndTime(date, time),</span>
+                HttpStatus.OK);
+    }
+
+    @GetMapping(path = &quot;/names&quot;)
+    public ResponseEntity&lt;List&lt;String&gt;&gt; getNamesFromReservationByDateAndTime(@RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                             LocalDate date,
+                                                                             @RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                             LocalTime time){
+<span class="nc" id="L68">        return new ResponseEntity&lt;&gt;(service.getNamesFromReservationByDateAndTime(date, time),</span>
+                HttpStatus.OK);
+    }
+
+    @PostMapping(path = &quot;/{id}&quot;, consumes = &quot;application/json&quot;)
+    public ResponseEntity&lt;Reservation&gt; addNewReservation(@RequestBody @Valid Reservation reservation) {
+<span class="nc" id="L74">        Reservation result = service.addNewReservation(reservation);</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L77">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+        } else {
+<span class="nc" id="L79">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

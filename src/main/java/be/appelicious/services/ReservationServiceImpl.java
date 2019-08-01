@@ -5,6 +5,8 @@ import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,6 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Reservation> getAllReservations() {
         return repo.findAll();
     }

@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Go4Fit,be.appelicious.services,ReservationServiceImpl,27,25,0,0,5,7,4,4,4,4
+Go4Fit,be.appelicious.services,CustomerServiceImpl,3,0,0,0,1,0,1,0,1,0
+Go4Fit,be.appelicious,Go4FitMain,5,3,0,0,2,1,1,1,1,1
+Go4Fit,be.appelicious.aspects,GetAspect,37,0,0,0,9,0,5,0,5,0
+Go4Fit,be.appelicious.filters,DataFilter,47,3,2,0,8,1,2,1,1,1
+Go4Fit,be.appelicious.controllers,CustomerController,5,0,0,0,2,0,2,0,2,0
+Go4Fit,be.appelicious.controllers,ReservationController,83,0,4,0,15,0,9,0,7,0
+Go4Fit,be.appelicious.controllers,TrainingsTypeController,3,0,0,0,1,0,1,0,1,0
+Go4Fit,be.appelicious.domain,Customer,20,11,0,0,8,5,6,3,6,3
+Go4Fit,be.appelicious.domain,Reservation,13,23,0,0,5,9,4,5,4,5
