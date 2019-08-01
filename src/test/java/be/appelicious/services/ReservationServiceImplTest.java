@@ -1,6 +1,6 @@
 package be.appelicious.services;
 
-import be.appelicious.domain.Customer;
+import be.appelicious.domain.User;
 import be.appelicious.domain.Reservation;
 import be.appelicious.filters.DataFilter;
 import be.appelicious.interfaces.Filters;
@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -91,14 +90,14 @@ public class ReservationServiceImplTest {
      * */
     private List<Reservation> generateDummyReservation(){
         Reservation reservation = new Reservation();
-        Customer customer = new Customer();
-        List<Customer> customerSet = new ArrayList<>();
-        customer.setFirstName("Test");
-        customer.setLastName("Test");
-        customerSet.add(customer);
+        User user = new User();
+        List<User> userSet = new ArrayList<>();
+        user.setFirstName("Test");
+        user.setLastName("Test");
+        userSet.add(user);
         reservation.setId(1);
         reservation.setDate(LocalDate.now());
-        reservation.setCustomers(customerSet);
+        reservation.setUsers(userSet);
         List<Reservation> list = new ArrayList<>();
         list.add(reservation);
 

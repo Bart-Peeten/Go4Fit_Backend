@@ -1,10 +1,10 @@
 package be.appelicious.interfaces;
 
-import be.appelicious.domain.Customer;
+import be.appelicious.domain.User;
 
 public interface CustomerService {
 
-    Customer save(Customer customer);
+    User save(User user);
 
-    Customer findByEmail(String email);
+    User findByEmail(String email);
 }

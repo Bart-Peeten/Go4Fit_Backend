@@ -13,10 +13,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().
-
-                authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated()
-                .and().httpBasic();
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
     }
 
     @Autowired
@@ -25,8 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder())
                 .dataSource(ds)
                 .usersByUsernameQuery(
-                        "SELECT u.userId, u.password, u.enabled FROM s2it_user u where u.userId = ?")
+                        "SELECT u.userId, u.password, u.enabled FROM go4fit_customer u where u.userId = ?")
                 .authoritiesByUsernameQuery(
-                        "SELECT u.userId, u.role from s2it_user u where u.userId = ?");
+                        "SELECT u.userId, u.role from go4fit_customer u where u.userId = ?");
     }
 }

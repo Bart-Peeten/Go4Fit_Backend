@@ -4,9 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "go4fit_reservation")
@@ -26,14 +24,14 @@ public class Reservation {
     @JoinTable(name = "go4fit_reservation_customer",
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "customerId")})
-    private List<Customer> customers = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public long getId() {

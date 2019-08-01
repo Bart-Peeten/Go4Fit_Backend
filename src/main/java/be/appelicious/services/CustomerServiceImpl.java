@@ -1,6 +1,6 @@
 package be.appelicious.services;
 
-import be.appelicious.domain.Customer;
+import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import be.appelicious.repositories.CustomerRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,12 +18,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void save(Customer customer) {
+    public void save(User user) {
 
     }
 
     @Override
-    public Customer findByEmail(String email) {
+    public User findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 }

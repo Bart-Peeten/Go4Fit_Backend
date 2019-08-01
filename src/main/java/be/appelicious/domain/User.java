@@ -2,17 +2,16 @@ package be.appelicious.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @Table(name = "go4fit_customer")
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+    @Column(name = "userid")
+    private Long userId;
 
     @Column(name = "firstname")
     @NotBlank(message = "Voornaam is verplicht!")
@@ -34,15 +33,26 @@ public class Customer {
     @NotBlank
     private String password;
 
+    @Column(name = "enabled")
+    private int enabled;
+
     @Column(name = "role")
     private String role;
 
-    public Long getCustomerId() {
-        return customerId;
+    public int getEnabled() {
+        return enabled;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

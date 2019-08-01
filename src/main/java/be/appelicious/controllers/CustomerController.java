@@ -1,7 +1,7 @@
 package be.appelicious.controllers;
 
 import be.appelicious.Helpers.RoleHelper;
-import be.appelicious.domain.Customer;
+import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +11,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/")
 public class CustomerController {
 
-    private CustomerService service;
-    private Logger logger;
     private BCryptPasswordEncoder encoder;
+    private CustomerService       service;
+    private Logger                logger;
 
     public CustomerController(CustomerService service) {
         this.service = service;
@@ -28,8 +27,8 @@ public class CustomerController {
     }
 
     @GetMapping(path = "login")
-    public ResponseEntity<Boolean> doesUserExist(@RequestParam("login") Customer user){
-        Customer result = service.findByEmail(user.getEmail());
+    public ResponseEntity<Boolean> doesUserExist(@RequestParam("login") User user){
+        User result = service.findByEmail(user.getEmail());
         if (result != null) {
             return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
         } else {
@@ -38,18 +37,18 @@ public class CustomerController {
     }
 
     @PostMapping(path = "registration", consumes = "application/json")
-    public ResponseEntity<Customer> addNewCustomer(@RequestBody @Valid Customer customer){
+    public ResponseEntity<User> addNewCustomer(@RequestBody @Valid User user){
         /* If a customer signs up there will no role be passed in the Customer object
         *  so, if the role field is empty it will be filled with the USER role.
         *  Otherwise the creation of a new user will be done by Postman to create the admin accounts. */
-        if (!customer.getRole().isPresent()) {
-            customer.setRole(RoleHelper.USER);
+        if (!user.getRole().isPresent()) {
+            user.setRole(RoleHelper.USER);
         }
-        String paswd = customer.getPassword();
+        String paswd = user.getPassword();
         String encryptedPaswd = encoder.encode(paswd);
-        customer.setPassword(encryptedPaswd);
+        user.setPassword(encryptedPaswd);
 
-        Customer result = service.save(customer);
+        User result = service.save(user);
 
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.CREATED);

@@ -1,11 +1,11 @@
 package be.appelicious.repositories;
 
-import be.appelicious.domain.Customer;
+import be.appelicious.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
+public interface CustomerRepository extends CrudRepository<User, Long> {
 
-    Customer findByEmail(String email);
+    User findByEmail(String email);
 }
