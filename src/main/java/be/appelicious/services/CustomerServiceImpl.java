@@ -18,8 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void save(User user) {
-
+    public User save(User user) {
+        return null;
     }
 
     @Override

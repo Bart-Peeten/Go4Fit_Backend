@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/reservation")
+@RequestMapping(path = "/api/reservation")
 public class ReservationController {
 
     private ReservationService service;

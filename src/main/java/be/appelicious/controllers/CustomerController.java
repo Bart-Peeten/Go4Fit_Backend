@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "api/")
+@RequestMapping(path = "/api")
 public class CustomerController {
 
     private BCryptPasswordEncoder encoder;
@@ -26,7 +26,7 @@ public class CustomerController {
         this.encoder = new BCryptPasswordEncoder();
     }
 
-    @GetMapping(path = "login")
+    @GetMapping(path = "/login")
     public ResponseEntity<Boolean> doesUserExist(@RequestParam("login") User user){
         User result = service.findByEmail(user.getEmail());
         if (result != null) {
@@ -36,7 +36,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping(path = "registration", consumes = "application/json")
+    @PostMapping(path = "/registration", consumes = "application/json")
     public ResponseEntity<User> addNewCustomer(@RequestBody @Valid User user){
         /* If a customer signs up there will no role be passed in the Customer object
         *  so, if the role field is empty it will be filled with the USER role.

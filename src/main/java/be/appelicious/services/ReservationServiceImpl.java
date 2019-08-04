@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,6 +52,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time) {
         List<Reservation> result = repo.findAllByDateAndTime(date, time);
+        if (result == null) {
+            List<String> noResults = new ArrayList<>();
+            noResults.add("No ");
+            return noResults;
+        }
 
         return filter.filterFullName(result);
     }

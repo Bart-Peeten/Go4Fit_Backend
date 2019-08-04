@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Go4Fit_Backend" />
         <module name="Go4Fit_backend" />
         <module name="Go4Fit" />
       </profile>
@@ -14,6 +15,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Go4Fit" options="-parameters" />
+      <module name="Go4Fit_Backend" options="-parameters" />
       <module name="Go4Fit_backend" options="-parameters" />
     </option>
   </component>
