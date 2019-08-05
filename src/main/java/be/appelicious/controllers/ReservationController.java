@@ -18,9 +18,10 @@ import java.util.List;
 public class ReservationController {
 
     private ReservationService service;
-    private Logger logger = LoggerFactory.getLogger(ReservationController.class);
+    private Logger logger;
 
     public ReservationController(ReservationService reservationService) {
+        this.logger  = LoggerFactory.getLogger(ReservationController.class);
         this.service = reservationService;
     }
 

@@ -1,6 +1,7 @@
 package be.appelicious.controllers;
 
 import be.appelicious.Helpers.RoleHelper;
+import be.appelicious.domain.Reservation;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import org.slf4j.Logger;
@@ -10,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/users")
 public class CustomerController {
 
     private BCryptPasswordEncoder encoder;
@@ -25,6 +28,18 @@ public class CustomerController {
         this.logger  = LoggerFactory.getLogger(ReservationController.class);
         this.encoder = new BCryptPasswordEncoder();
     }
+
+    // Endpoint to get all users.
+    @GetMapping(path = "/")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> result = service.getAllUsers();
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
 
     @GetMapping(path = "/login")
     public ResponseEntity<Boolean> doesUserExist(@RequestParam("login") User user){

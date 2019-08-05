@@ -6,6 +6,8 @@ import be.appelicious.repositories.CustomerRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -18,8 +20,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
     public User save(User user) {
-        return null;
+
+        return customerRepository.save(user);
     }
 
     @Override
