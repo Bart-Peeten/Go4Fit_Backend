@@ -86,7 +86,11 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservationResult == null) {
             return repo.save(reservation);
         } else {
-            reservation.getUsers().forEach(item -> reservationResult.getUsers().add(item));
+            reservation.getUsers().forEach(item -> {
+                item.setUserId(getIdOfExistingUser(item));
+                reservationResult.getUsers().add(item);
+            });
+
             return repo.save(reservationResult);
         }
     }
@@ -126,5 +130,11 @@ public class ReservationServiceImpl implements ReservationService {
         reservationResult.setUsers(tmpArray);
 
         return repo.save(reservationResult);
+    }
+
+    private long getIdOfExistingUser(User user){
+        User result = customerRepository.findByEmail(user.getEmail());
+
+        return result.getUserId();
     }
 }
