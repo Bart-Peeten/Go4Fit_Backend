@@ -35,8 +35,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public long getNumberOfReservations(LocalDate date, LocalTime time) {
-        return repo.countAllByDateAndTime(date, time);
+    public Long getNumberOfReservations(LocalDate date, LocalTime time) {
+        List<String> result = getNamesFromReservationByDateAndTime(date, time);
+        Long count = (long)result.size();
+        return count;
     }
 
     @Override
@@ -51,10 +53,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time) {
+        List<String> noResults = new ArrayList<>();
         List<Reservation> result = repo.findAllByDateAndTime(date, time);
-        if (result == null) {
-            List<String> noResults = new ArrayList<>();
-            noResults.add("No ");
+        if (result.isEmpty()) {
+            noResults.add("nog geen reservaties!");
             return noResults;
         }
 
@@ -62,6 +64,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public Reservation addNewReservation(Reservation reservation) {
         return repo.save(reservation);
     }

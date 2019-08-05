@@ -24,6 +24,7 @@ public class ReservationController {
         this.service = reservationService;
     }
 
+    /* Endpoint to get all reservations */
     @GetMapping(path = "/")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservation = service.getAllReservations();
@@ -35,9 +36,35 @@ public class ReservationController {
         }
     }
 
+    /* Endpoint to get all reservations by reservation id */
     @GetMapping(path = "/{id}")
     public ResponseEntity<List<Reservation>> getReservationById(@PathVariable long id) {
         return new ResponseEntity<>(service.getReservationById(id), HttpStatus.OK);
+    }
+
+    /* Endpoint to get number of reservations for a given date and time */
+    @GetMapping(path = "/numberofreservations")
+    public ResponseEntity<Long> getNumberOfReservationByDateAndTime(@RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                    LocalDate date,
+                                                                    @RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                    LocalTime time){
+        Long result = service.getNumberOfReservations(date, time);
+
+        return new ResponseEntity<Long>(result, HttpStatus.OK);
+    }
+
+    /* Endpoint to get all names of a reservations for a given date and time */
+    @GetMapping(path = "/names")
+    public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                     LocalDate date,
+                                                                             @RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                                     LocalTime time){
+        return new ResponseEntity<>(service.getNamesFromReservationByDateAndTime(date, time),
+                HttpStatus.OK);
     }
 
     @GetMapping(path = "/date")
@@ -59,18 +86,8 @@ public class ReservationController {
                 HttpStatus.OK);
     }
 
-    @GetMapping(path = "/names")
-    public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
-                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                             LocalDate date,
-                                                                             @RequestParam
-                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                             LocalTime time){
-        return new ResponseEntity<>(service.getNamesFromReservationByDateAndTime(date, time),
-                HttpStatus.OK);
-    }
 
-    @PostMapping(path = "/{id}", consumes = "application/json")
+    @PostMapping(path = "/", consumes = "application/json")
     public ResponseEntity<Reservation> addNewReservation(@RequestBody @Valid Reservation reservation) {
         Reservation result = service.addNewReservation(reservation);
 

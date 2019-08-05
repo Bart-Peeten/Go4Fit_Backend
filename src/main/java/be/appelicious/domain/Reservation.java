@@ -20,10 +20,10 @@ public class Reservation {
     @Column(name = "time")
     private LocalTime time;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "go4fit_reservation_customer",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "customerId")})
+            joinColumns = {@JoinColumn(name = "id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "customerId", nullable = false, updatable = false)})
     private List<User> users = new ArrayList<>();
 
     public List<User> getUsers() {
