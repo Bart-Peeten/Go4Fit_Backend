@@ -5,6 +5,7 @@ import be.appelicious.domain.Reservation;
 import be.appelicious.filters.DataFilter;
 import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
+import be.appelicious.repositories.CustomerRepository;
 import be.appelicious.repositories.ReservationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,8 @@ public class ReservationServiceImplTest {
 
     @Mock
     private ReservationRepository mockRepo;
+    @Mock
+    private CustomerRepository mockCustomerRepository;
     private Filters filter;
     private ReservationService service;
     private LocalDate date;
@@ -47,7 +50,7 @@ public class ReservationServiceImplTest {
         when(mockRepo.findAll()).thenReturn(this.reservationList);
         when(mockRepo.findAllByDateAndTime(date, time)).thenReturn(null);
         when(mockRepo.countAllByDateAndTime(this.date, this.time)).thenReturn(this.randomNumber);
-        this.service = new ReservationServiceImpl(mockRepo, filter);
+        this.service = new ReservationServiceImpl(mockRepo, mockCustomerRepository, filter);
     }
 
     @Test

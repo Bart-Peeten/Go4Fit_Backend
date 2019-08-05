@@ -13,5 +13,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByDateAndTime(LocalDate date, LocalTime time);
     List<Reservation> findAllById(long id);
     List<Reservation> findAllByDate(LocalDate date);
+    Reservation findByDateAndTime(LocalDate date, LocalTime time);
     long countAllByDateAndTime(LocalDate date, LocalTime time);
 }
