@@ -97,4 +97,19 @@ public class ReservationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam
+                                                                 String firstname,
+                                                                 @RequestParam
+                                                                 String lastname,
+                                                                 @RequestParam
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                 LocalDate date,
+                                                                 @RequestParam
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                 LocalTime time){
+        Reservation reservation = service.removeUserFromReservation(firstname, lastname, date, time);
+        return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+    }
 }

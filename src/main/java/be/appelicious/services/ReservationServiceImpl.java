@@ -90,4 +90,41 @@ public class ReservationServiceImpl implements ReservationService {
             return repo.save(reservationResult);
         }
     }
+
+    @Override
+    @Transactional
+    public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time) {
+        // First get reservation for given date and time.
+        Reservation reservationResult = repo.findByDateAndTime(date, time);
+
+        // fetch existing names from reservation result and find the given user in the fetch result.
+        String givenFullname = firstname.toLowerCase() + " " + lastname.toLowerCase();
+        List<String> namesList = new ArrayList<>();
+        reservationResult.getUsers().forEach(item -> namesList.add(item.getFirstName().toLowerCase() + " " + item.getLastName().toLowerCase()));
+        int index = namesList.indexOf(givenFullname);
+
+        // If the array of reservationResult.getUsers() is empty
+        // or the index is not in reservationResult.getUsers() range
+        // return the original reservationResult.getUsers().
+        if (reservationResult.getUsers() == null
+                || index < 0
+                || index >= reservationResult.getUsers().size()) {
+
+            return repo.save(reservationResult);
+        }
+        // Create another array
+        List<User> tmpArray = new ArrayList<>();
+        // Copy the elements except the index
+        // from original array to the other array
+        int size = reservationResult.getUsers().size();
+        for (int i = 0; i < size; i++) {
+            if (i == index) {
+                continue;
+            }
+            tmpArray.add(reservationResult.getUsers().get(i));
+        }
+        reservationResult.setUsers(tmpArray);
+
+        return repo.save(reservationResult);
+    }
 }
