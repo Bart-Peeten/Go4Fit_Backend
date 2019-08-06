@@ -60,10 +60,10 @@ public class ReservationController {
     @GetMapping(path = "/names")
     public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                     LocalDate date,
+                                                                             LocalDate date,
                                                                              @RequestParam
                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                                     LocalTime time){
+                                                                             LocalTime time){
         return new ResponseEntity<>(service.getNamesFromReservationByDateAndTime(date, time),
                 HttpStatus.OK);
     }

@@ -34,4 +34,12 @@ public class CustomerServiceImpl implements CustomerService {
     public User findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
+
+    @Override
+    public boolean removeUser(String firstname, String lastname) {
+        int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);
+
+        // If isRemoved is greater then 0 then there is a user deleted, so return true else return false.
+        return isremoved > 0;
+    }
 }

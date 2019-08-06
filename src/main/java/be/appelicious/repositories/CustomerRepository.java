@@ -10,4 +10,6 @@ import javax.jws.soap.SOAPBinding;
 @Repository
 public interface CustomerRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
+    User findByFirstNameAndLastName(String firstname, String lastname);
+    int deleteByFirstNameAndLastName(String firstname, String lastname);
 }

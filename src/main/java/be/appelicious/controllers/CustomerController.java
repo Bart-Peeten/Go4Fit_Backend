@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.jws.soap.SOAPBinding;
 import javax.validation.Valid;
+import java.security.PublicKey;
 import java.util.List;
 
 @RestController
@@ -70,5 +71,18 @@ public class CustomerController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<User> removeUser(@RequestParam
+                                       String firstname,
+                                       @RequestParam
+                                       String lastname){
+        boolean result = service.removeUser(firstname, lastname);
+
+        if (result) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
