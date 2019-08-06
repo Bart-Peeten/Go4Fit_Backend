@@ -3,6 +3,7 @@ package be.appelicious.services;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import be.appelicious.repositories.CustomerRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Secured("ROLE_ADMIN")
     public boolean removeUser(String firstname, String lastname) {
         int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);
 

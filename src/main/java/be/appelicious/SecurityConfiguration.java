@@ -1,27 +1,39 @@
 package be.appelicious;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    DataSource ds;
+
+    //.antMatchers("/api/users/").permitAll()
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .cors()
                 .and()
+                .httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/login*").permitAll()
-                .antMatchers(HttpMethod.GET, "/login").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/reservation/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .httpBasic()
                 .and()
                 .logout().logoutSuccessUrl("/logout")
                 .and()
@@ -30,13 +42,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth, DataSource ds) throws Exception {
-        auth.jdbcAuthentication()
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.jdbcAuthentication().dataSource(ds)
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .dataSource(ds)
                 .usersByUsernameQuery(
-                        "SELECT u.email, u.password from go4fit_customer u where u.email = ?")
+                        "SELECT email as username, password, true FROM go4fit_customer WHERE email = ?")
                 .authoritiesByUsernameQuery(
-                        "SELECT u.email, u.role from go4fit_customer u where u.email = ?");
+                        "SELECT email as username, role FROM go4fit_customer WHERE email = ?");
+
+        // Added inMemory authentication for testing purpose.
+        auth.inMemoryAuthentication()
+                .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
+                .and()
+                .withUser("admin").password(passwordEncoder().encode("password")).roles("USER", "ADMIN");
+
+
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
