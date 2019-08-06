@@ -14,14 +14,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .cors()
                 .and()
-                .httpBasic();
+                .authorizeRequests()
+                .antMatchers("/login*").permitAll()
+                .antMatchers(HttpMethod.GET, "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .and()
+                .logout().logoutSuccessUrl("/logout")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
     }
+
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth, DataSource ds) throws Exception {
@@ -29,8 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder())
                 .dataSource(ds)
                 .usersByUsernameQuery(
-                        "SELECT u.userId, u.email, u.password, u.enabled FROM go4fit_customer u where u.email = ?")
+                        "SELECT u.email, u.password from go4fit_customer u where u.email = ?")
                 .authoritiesByUsernameQuery(
-                        "SELECT u.userId, u.role, u.email from go4fit_customer u where u.email = ?");
+                        "SELECT u.email, u.role from go4fit_customer u where u.email = ?");
     }
 }
