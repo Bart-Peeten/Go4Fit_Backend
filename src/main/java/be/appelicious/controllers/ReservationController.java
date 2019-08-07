@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/reservation")
 public class ReservationController {
 
