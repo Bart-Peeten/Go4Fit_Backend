@@ -44,9 +44,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.jdbcAuthentication().dataSource(ds)
+        auth.jdbcAuthentication()
                 .passwordEncoder(new BCryptPasswordEncoder())
+                .dataSource(ds)
                 .usersByUsernameQuery(
                         "SELECT email as username, password, true FROM go4fit_customer WHERE email = ?")
                 .authoritiesByUsernameQuery(

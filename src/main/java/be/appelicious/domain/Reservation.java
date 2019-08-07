@@ -20,7 +20,7 @@ public class Reservation {
     @Column(name = "time")
     private LocalTime time;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "go4fit_reservation_customer",
             joinColumns = {@JoinColumn(name = "id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "customerId", nullable = false, updatable = false)})

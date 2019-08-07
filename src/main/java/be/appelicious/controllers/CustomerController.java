@@ -45,7 +45,7 @@ public class CustomerController {
 
     @GetMapping(path = "/login")
     public ResponseEntity<User> doesUserExist(@RequestParam String useremail,
-                                                 @RequestParam String userPassword) {
+                                              @RequestParam String userPassword) {
         User result = service.findByEmail(useremail);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -73,7 +73,7 @@ public class CustomerController {
         /* If a customer signs up there will no role be passed in the Customer object
          *  so, if the role field is empty it will be filled with the USER role.
          *  Otherwise the creation of a new user will be done by Postman to create the admin accounts. */
-        User newUser = new User();
+            User newUser = new User();
         if (!user.getRole().isPresent()) {
             newUser.setRole(RoleHelper.USER);
         } else {
