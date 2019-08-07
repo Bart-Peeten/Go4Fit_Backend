@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/reservation/**").permitAll()
-                .antMatchers("/api/users/registration").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutSuccessUrl("/logout")
@@ -42,9 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.jdbcAuthentication().dataSource(ds)
+        auth.jdbcAuthentication()
                 .passwordEncoder(new BCryptPasswordEncoder())
+                .dataSource(ds)
                 .usersByUsernameQuery(
                         "SELECT email as username, password, true FROM go4fit_customer WHERE email = ?")
                 .authoritiesByUsernameQuery(

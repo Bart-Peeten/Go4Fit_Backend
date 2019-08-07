@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/reservation")
 public class ReservationController {
 
@@ -56,7 +57,9 @@ public class ReservationController {
         return new ResponseEntity<Long>(result, HttpStatus.OK);
     }
 
-    /* Endpoint to get all names of a reservations for a given date and time */
+    /**
+     *  Endpoint to get all names of a reservations for a given date and time
+     *  */
     @GetMapping(path = "/names")
     public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

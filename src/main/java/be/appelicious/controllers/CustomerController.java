@@ -17,16 +17,17 @@ import java.security.PublicKey;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/api/users")
 public class CustomerController {
 
     private BCryptPasswordEncoder encoder;
-    private CustomerService       service;
-    private Logger                logger;
+    private CustomerService service;
+    private Logger logger;
 
     public CustomerController(CustomerService service) {
         this.service = service;
-        this.logger  = LoggerFactory.getLogger(ReservationController.class);
+        this.logger = LoggerFactory.getLogger(ReservationController.class);
         this.encoder = new BCryptPasswordEncoder();
     }
 
@@ -43,31 +44,56 @@ public class CustomerController {
 
 
     @GetMapping(path = "/login")
-    public ResponseEntity<Boolean> doesUserExist(@RequestParam("login") User user){
-        User result = service.findByEmail(user.getEmail());
+    public ResponseEntity<User> doesUserExist(@RequestParam String useremail,
+                                              @RequestParam String userPassword) {
+        User result = service.findByEmail(useremail);
         if (result != null) {
-            return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
-    @PostMapping(path = "/registration", consumes = "application/json")
-    public ResponseEntity<User> addNewCustomer(@RequestBody @Valid User user){
-        /* If a customer signs up there will no role be passed in the Customer object
-        *  so, if the role field is empty it will be filled with the USER role.
-        *  Otherwise the creation of a new user will be done by Postman to create the admin accounts. */
-        if (!user.getRole().isPresent()) {
-            user.setRole(RoleHelper.USER);
+    @GetMapping(path = "/admin")
+    public ResponseEntity<Boolean> isUserAdmin(@RequestParam String useremail,
+                                               @RequestParam String userPassword) {
+        User result = service.findByEmail(useremail);
+        if (result != null) {
+            if (result.getRole().equals("ROLE_ADMIN")) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @PostMapping(path = "/registration", consumes = "application/json")
+    public ResponseEntity<User> addNewCustomer(@RequestBody User user) {
+        /* If a customer signs up there will no role be passed in the Customer object
+         *  so, if the role field is empty it will be filled with the USER role.
+         *  Otherwise the creation of a new user will be done by Postman to create the admin accounts. */
+            User newUser = new User();
+        if (!user.getRole().isPresent()) {
+            newUser.setRole(RoleHelper.USER);
+        } else {
+            newUser.setRole(user.getRole().orElse(null));
+        }
+        System.out.println("De inkomende user is: ");
+        System.out.println(user.getFirstName() + " " + user.getLastName());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmail(user.getEmail());
+        newUser.setPhone(user.getPhone());
+        newUser.setEnabled(user.getEnabled());
         String paswd = user.getPassword();
         String encryptedPaswd = encoder.encode(paswd);
-        user.setPassword(encryptedPaswd);
+        newUser.setPassword(encryptedPaswd);
 
-        User result = service.save(user);
+        User result = service.save(newUser);
 
         if (result != null) {
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -75,9 +101,9 @@ public class CustomerController {
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<User> removeUser(@RequestParam
-                                       String firstname,
-                                       @RequestParam
-                                       String lastname){
+                                                   String firstname,
+                                           @RequestParam
+                                                   String lastname) {
         boolean result = service.removeUser(firstname, lastname);
 
         if (result) {
