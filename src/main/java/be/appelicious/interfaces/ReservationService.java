@@ -18,7 +18,7 @@ public interface ReservationService {
     List<Reservation> getReservationById(long id);
     List<Reservation> getReservationByDate(LocalDate date);
     List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time);
-    List<Reservation> getReservationsForGivenWeek(List<LocalDate> dates);
+    List<List<String>> getReservationNamesForGivenWeek(List<LocalDate> dates);
     Reservation addNewReservation(Reservation reservation);
     Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time);
 }

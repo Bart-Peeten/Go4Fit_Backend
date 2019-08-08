@@ -87,12 +87,12 @@ public class ReservationController {
      * @param datesOfWeek
      * @return List with Reservations of the given week.
      *  */
-    @GetMapping(path = "/weekdata")
-    public ResponseEntity<List<Reservation>> getReservationDataForGivenWeek(@RequestParam
-                                                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                            List<LocalDate> datesOfWeek) {
-        List<Reservation> result = new ArrayList<>();
-        result = service.getReservationsForGivenWeek(datesOfWeek);
+    @GetMapping(path = "/weekusers")
+    public ResponseEntity<List<List<String>>> getReservationNamesForGivenWeek(@RequestParam
+                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                        List<LocalDate> datesOfWeek) {
+        List<List<String>> result = new ArrayList<>();
+        result = service.getReservationNamesForGivenWeek(datesOfWeek);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -83,19 +83,20 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Reservation> getReservationsForGivenWeek(List<LocalDate> dates) {
+    public List<List<String>> getReservationNamesForGivenWeek(List<LocalDate> dates) {
         int index = 0;
         String[][] timesOfWeekList = filltimes();
-        List<Reservation> reservationList = new ArrayList<>();
+        List<List<String>> reservationList = new ArrayList<>();
         for (LocalDate item : dates) {
             for (int i = 0; i < timesOfWeekList[index].length; i++) {
                 List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
                 if (!result.isEmpty()) {
-                    reservationList.addAll(result);
+                    List<String> namesList = parseFullNames(result);
+                    reservationList.add(namesList);
                 } else {
-                    List<Reservation> emptyList = new ArrayList<>();
-                    emptyList.add(new Reservation());
-                    reservationList.addAll(emptyList);
+                    List<String> emptyList = new ArrayList<>();
+                    emptyList.add(" ");
+                    reservationList.add(emptyList);
                 }
             }
             index++;
@@ -164,6 +165,19 @@ public class ReservationServiceImpl implements ReservationService {
         User result = customerRepository.findByEmail(user.getEmail());
 
         return result.getUserId();
+    }
+
+    private List<String> parseFullNames(List<Reservation> result) {
+        List<String> tmpList = new ArrayList<>();
+        result.forEach(item -> {
+            List<User> userList = item.getUsers();
+            userList.forEach(user -> {
+                String fullName = user.getFirstName() + " " + user.getLastName();
+                tmpList.add(fullName);
+            });
+        });
+
+        return tmpList;
     }
 
     private String[][] filltimes() {
