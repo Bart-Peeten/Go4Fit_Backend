@@ -6,14 +6,19 @@ import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.CustomerRepository;
 import be.appelicious.repositories.ReservationRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+/**
+ * @author Bart Peeten
+ */
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -77,6 +82,30 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Reservation> getReservationsForGivenWeek(List<LocalDate> dates) {
+        int index = 0;
+        String[][] timesOfWeekList = filltimes();
+        List<Reservation> reservationList = new ArrayList<>();
+        for (LocalDate item : dates) {
+            for (int i = 0; i < timesOfWeekList[index].length; i++) {
+                List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
+                if (!result.isEmpty()) {
+                    reservationList.addAll(result);
+                } else {
+                    List<Reservation> emptyList = new ArrayList<>();
+                    emptyList.add(new Reservation());
+                    reservationList.addAll(emptyList);
+                }
+            }
+            index++;
+        }
+
+        return reservationList;
+    }
+
+    @Override
+    @Transactional
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
         List<User> newUser = reservation.getUsers();
@@ -131,9 +160,21 @@ public class ReservationServiceImpl implements ReservationService {
         return repo.save(reservationResult);
     }
 
-    private long getIdOfExistingUser(User user){
+    private long getIdOfExistingUser(User user) {
         User result = customerRepository.findByEmail(user.getEmail());
 
         return result.getUserId();
+    }
+
+    private String[][] filltimes() {
+        String tuesday[] = {"19:00", "20:00"};
+        String wednesday[] = {"09:00", "10:00", "19:00", "20:00"};
+        String thursday[] = {"19:00"};
+        String saterday[] = {"09:00"};
+        String sunday[] = {"08:00", "09:00", "10:00"};
+
+        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, saterday, sunday};
+
+        return tmpArray;
     }
 }

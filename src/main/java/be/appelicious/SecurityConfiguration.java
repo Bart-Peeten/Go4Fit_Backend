@@ -32,6 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/reservation/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/registration").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/reservation/weekdata").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutSuccessUrl("/logout")

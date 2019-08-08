@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Bart Peeten
+ * */
 
 @RestController
 @CrossOrigin
@@ -26,7 +31,9 @@ public class ReservationController {
         this.service = reservationService;
     }
 
-    /* Endpoint to get all reservations */
+    /**
+     *  Endpoint to GET all reservations
+     *  */
     @GetMapping(path = "/")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservation = service.getAllReservations();
@@ -38,13 +45,17 @@ public class ReservationController {
         }
     }
 
-    /* Endpoint to get all reservations by reservation id */
+    /**
+     * Endpoint to GET all reservations by reservation id
+     * */
     @GetMapping(path = "/{id}")
     public ResponseEntity<List<Reservation>> getReservationById(@PathVariable long id) {
         return new ResponseEntity<>(service.getReservationById(id), HttpStatus.OK);
     }
 
-    /* Endpoint to get number of reservations for a given date and time */
+    /**
+     *  Endpoint to GET number of reservations for a given date and time
+     *  */
     @GetMapping(path = "/numberofreservations")
     public ResponseEntity<Long> getNumberOfReservationByDateAndTime(@RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -58,7 +69,7 @@ public class ReservationController {
     }
 
     /**
-     *  Endpoint to get all names of a reservations for a given date and time
+     *  Endpoint to GET all names of a reservations for a given date and time
      *  */
     @GetMapping(path = "/names")
     public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
@@ -69,6 +80,21 @@ public class ReservationController {
                                                                              LocalTime time){
         return new ResponseEntity<>(service.getNamesFromReservationByDateAndTime(date, time),
                 HttpStatus.OK);
+    }
+
+    /**
+     *  Endpoint to GET all data of a reservations for a given week
+     * @param datesOfWeek
+     * @return List with Reservations of the given week.
+     *  */
+    @GetMapping(path = "/weekdata")
+    public ResponseEntity<List<Reservation>> getReservationDataForGivenWeek(@RequestParam
+                                                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                            List<LocalDate> datesOfWeek) {
+        List<Reservation> result = new ArrayList<>();
+        result = service.getReservationsForGivenWeek(datesOfWeek);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(path = "/date")
@@ -90,7 +116,9 @@ public class ReservationController {
                 HttpStatus.OK);
     }
 
-
+    /**
+     * Endpoint to POST a new reservation
+     * */
     @PostMapping(path = "/", consumes = "application/json")
     public ResponseEntity<Reservation> addNewReservation(@RequestBody @Valid Reservation reservation) {
         Reservation result = service.addNewReservation(reservation);
@@ -102,6 +130,9 @@ public class ReservationController {
         }
     }
 
+    /**
+     * Endpoint to DELETE a new reservation
+     * */
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam
                                                                  String firstname,
