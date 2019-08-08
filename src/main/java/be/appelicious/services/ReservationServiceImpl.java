@@ -15,6 +15,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Bart Peeten
+ * */
+
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
@@ -74,6 +78,14 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         return filter.filterFullName(result);
+    }
+
+    @Override
+    public List<Reservation> getReservationsForGivenWeek(List<LocalDate> dates) {
+        List<Reservation> reservationList = new ArrayList<>();
+        dates.forEach(item -> reservationList.addAll(repo.findAllByDate(item)));
+
+        return reservationList;
     }
 
     @Override

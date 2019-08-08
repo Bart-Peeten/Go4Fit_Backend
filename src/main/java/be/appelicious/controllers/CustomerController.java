@@ -16,6 +16,10 @@ import javax.validation.Valid;
 import java.security.PublicKey;
 import java.util.List;
 
+/**
+ * @author Bart Peeten
+ * */
+
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/api/users")

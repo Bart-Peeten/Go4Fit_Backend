@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ * @author Bart Peeten
+ * */
+
 public interface ReservationService {
 
     List<Reservation> getAllReservations();
@@ -14,6 +18,7 @@ public interface ReservationService {
     List<Reservation> getReservationById(long id);
     List<Reservation> getReservationByDate(LocalDate date);
     List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time);
+    List<Reservation> getReservationsForGivenWeek(List<LocalDate> dates);
     Reservation addNewReservation(Reservation reservation);
     Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time);
 }
