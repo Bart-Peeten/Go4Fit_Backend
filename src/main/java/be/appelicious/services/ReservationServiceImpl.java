@@ -107,6 +107,28 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
+    public List<Integer> getReservationNumbersForGivenWeek(List<LocalDate> datesOfWeek) {
+        int index = 0;
+        String[][] timesOfWeekList = filltimes();
+        List<Integer> reservationList = new ArrayList<>();
+        for (LocalDate item : datesOfWeek) {
+            for (int i = 0; i < timesOfWeekList[index].length; i++) {
+                List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
+                if (!result.isEmpty()) {
+                    List<String> namesList = parseFullNames(result);
+                    reservationList.add(namesList.size());
+                } else {
+                    reservationList.add(0);
+                }
+            }
+            index++;
+        }
+
+        return reservationList;
+    }
+
+    @Override
+    @Transactional
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
         List<User> newUser = reservation.getUsers();
@@ -122,6 +144,13 @@ public class ReservationServiceImpl implements ReservationService {
 
             return repo.save(reservationResult);
         }
+    }
+
+    @Override
+    public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname) {
+        User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
+
+        return null;
     }
 
     @Override

@@ -97,6 +97,21 @@ public class ReservationController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     *  Endpoint to GET all number of a reservations for a given week
+     * @param datesOfWeek
+     * @return List with number of Reservations of the given week.
+     *  */
+    @GetMapping(path = "/weekreservaties")
+    public ResponseEntity<List<Integer>> getReservationNumbersForGivenWeek(@RequestParam
+                                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                           List<LocalDate> datesOfWeek) {
+        List<Integer> result = new ArrayList<>();
+        result = service.getReservationNumbersForGivenWeek(datesOfWeek);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/date")
     public ResponseEntity<List<Reservation>> getReservationsByDate(@RequestParam("date")
                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -122,6 +137,27 @@ public class ReservationController {
     @PostMapping(path = "/", consumes = "application/json")
     public ResponseEntity<Reservation> addNewReservation(@RequestBody @Valid Reservation reservation) {
         Reservation result = service.addNewReservation(reservation);
+
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Endpoint to POST a new reservation when only fullname is available.
+     * */
+    @PostMapping(path = "/onlyname", consumes = "application/json")
+    public ResponseEntity<Reservation> addNewReservationWithOnlyFullName(@RequestParam String firstname,
+                                                                         @RequestParam String lastname,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                         LocalDate date,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                         LocalTime time) {
+        Reservation result = service.addNewReservationWithOnlyFullName(firstname, lastname);
 
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
