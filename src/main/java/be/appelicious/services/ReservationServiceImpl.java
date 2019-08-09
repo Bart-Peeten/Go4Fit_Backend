@@ -147,10 +147,26 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname) {
+    @Transactional
+    public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time) {
+        List<User> userList = new ArrayList<>();
         User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
+        if ( newUser != null) {
+            userList.add(newUser);
+        }
 
-        return null;
+        Reservation reservationResult = repo.findByDateAndTime(date, time);
+        // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
+        if (reservationResult == null) {
+            Reservation newReservation = new Reservation();
+            newReservation.setDate(date);
+            newReservation.setTime(time);
+            newReservation.setUsers(userList);
+            return repo.save(newReservation);
+        } else {
+            reservationResult.getUsers().add(newUser);
+            return repo.save(reservationResult);
+        }
     }
 
     @Override

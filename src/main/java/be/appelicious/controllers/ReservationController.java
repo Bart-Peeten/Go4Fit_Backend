@@ -148,7 +148,7 @@ public class ReservationController {
     /**
      * Endpoint to POST a new reservation when only fullname is available.
      * */
-    @PostMapping(path = "/onlyname", consumes = "application/json")
+    @PostMapping(path = "/onlyname")
     public ResponseEntity<Reservation> addNewReservationWithOnlyFullName(@RequestParam String firstname,
                                                                          @RequestParam String lastname,
                                                                          @RequestParam
@@ -157,7 +157,7 @@ public class ReservationController {
                                                                          @RequestParam
                                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
                                                                          LocalTime time) {
-        Reservation result = service.addNewReservationWithOnlyFullName(firstname, lastname);
+        Reservation result = service.addNewReservationWithOnlyFullName(firstname, lastname, date, time);
 
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);

@@ -22,5 +22,5 @@ public interface ReservationService {
     Reservation addNewReservation(Reservation reservation);
     Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time);
     List<Integer> getReservationNumbersForGivenWeek(List<LocalDate> datesOfWeek);
-    Reservation addNewReservationWithOnlyFullName(String firstname, String lastname);
+    Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time);
 }
