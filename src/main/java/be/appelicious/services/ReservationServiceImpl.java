@@ -128,6 +128,35 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<Boolean> getIsParticipantReserved(String firstname, String lastname, List<LocalDate> datesOfWeek) {
+        int index = 0;
+        String[][] timesOfWeekList = filltimes();
+        List<Boolean> isReservedList = new ArrayList<>();
+        for (LocalDate item : datesOfWeek) {
+            for (int i = 0; i < timesOfWeekList[index].length; i++) {
+                List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
+                if (!result.isEmpty()) {
+                    for (Reservation reservation : result) {
+                        for (User user : reservation.getUsers()) {
+                            if (user.getFirstName().equals(firstname) &&
+                            user.getLastName().equals(lastname)) {
+                                isReservedList.add(true);
+                            } else {
+                                isReservedList.add(false);
+                            }
+                        }
+                    }
+                } else {
+                    isReservedList.add(false);
+                }
+            }
+            index++;
+        }
+
+        return isReservedList;
+    }
+
+    @Override
     @Transactional
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
