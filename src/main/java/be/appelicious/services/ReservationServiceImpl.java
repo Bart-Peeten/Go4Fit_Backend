@@ -227,12 +227,11 @@ public class ReservationServiceImpl implements ReservationService {
 
     private String[][] filltimes() {
         String tuesday[] = {"19:00", "20:00"};
-        String wednesday[] = {"09:00", "10:00", "19:00", "20:00"};
+        String wednesday[] = {"09:00", "19:00", "20:00"};
         String thursday[] = {"19:00"};
-        String saterday[] = {"09:00"};
         String sunday[] = {"08:00", "09:00", "10:00"};
 
-        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, saterday, sunday};
+        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, sunday};
 
         return tmpArray;
     }
