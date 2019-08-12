@@ -137,13 +137,17 @@ public class ReservationServiceImpl implements ReservationService {
                 List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
                 if (!result.isEmpty()) {
                     for (Reservation reservation : result) {
-                        for (User user : reservation.getUsers()) {
-                            if (user.getFirstName().equals(firstname) &&
-                            user.getLastName().equals(lastname)) {
-                                isReservedList.add(true);
-                            } else {
-                                isReservedList.add(false);
+                        if (!reservation.getUsers().isEmpty()) {
+                            for (User user : reservation.getUsers()) {
+                                if (user.getFirstName().equals(firstname) &&
+                                        user.getLastName().equals(lastname)) {
+                                    isReservedList.add(true);
+                                } else {
+                                    isReservedList.add(false);
+                                }
                             }
+                        } else {
+                            isReservedList.add(false);
                         }
                     }
                 } else {
@@ -180,7 +184,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time) {
         List<User> userList = new ArrayList<>();
         User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
-        if ( newUser != null) {
+        if (newUser != null) {
             userList.add(newUser);
         }
 
