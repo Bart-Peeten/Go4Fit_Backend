@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious</a> &gt; <span class="el_source">SecurityConfiguration.java</span></div><h1>SecurityConfiguration.java</h1><pre class="source lang-java linenums">package be.appelicious;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
+
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
+<span class="nc" id="L19">public class SecurityConfiguration extends WebSecurityConfigurerAdapter {</span>
+
+    @Autowired
+    DataSource ds;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+<span class="nc" id="L26">        http.csrf().disable()</span>
+<span class="nc" id="L27">                .cors()</span>
+<span class="nc" id="L28">                .and()</span>
+<span class="nc" id="L29">                .httpBasic().and()</span>
+<span class="nc" id="L30">                .authorizeRequests()</span>
+<span class="nc" id="L31">                .antMatchers(&quot;/&quot;).permitAll()</span>
+<span class="nc" id="L32">                .antMatchers(HttpMethod.GET, &quot;/api/users/**&quot;).permitAll()</span>
+<span class="nc" id="L33">                .antMatchers(HttpMethod.GET, &quot;/api/reservation/**&quot;).permitAll()</span>
+<span class="nc" id="L34">                .antMatchers(HttpMethod.POST, &quot;/api/users/registration&quot;).permitAll()</span>
+<span class="nc" id="L35">                .antMatchers(HttpMethod.GET, &quot;/api/reservation/weekdata&quot;).permitAll()</span>
+<span class="nc" id="L36">                .anyRequest().authenticated()</span>
+<span class="nc" id="L37">                .and()</span>
+<span class="nc" id="L38">                .logout().logoutSuccessUrl(&quot;/logout&quot;)</span>
+<span class="nc" id="L39">                .and()</span>
+<span class="nc" id="L40">                .exceptionHandling().accessDeniedPage(&quot;/403&quot;);</span>
+<span class="nc" id="L41">    }</span>
+
+
+    @Autowired
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+<span class="nc" id="L46">        auth.jdbcAuthentication()</span>
+<span class="nc" id="L47">                .passwordEncoder(new BCryptPasswordEncoder())</span>
+<span class="nc" id="L48">                .dataSource(ds)</span>
+<span class="nc" id="L49">                .usersByUsernameQuery(</span>
+                        &quot;SELECT email as username, password, true FROM go4fit_customer WHERE email = ?&quot;)
+<span class="nc" id="L51">                .authoritiesByUsernameQuery(</span>
+                        &quot;SELECT email as username, role FROM go4fit_customer WHERE email = ?&quot;);
+
+        // Added inMemory authentication for testing purpose.
+<span class="nc" id="L55">        auth.inMemoryAuthentication()</span>
+<span class="nc" id="L56">                .withUser(&quot;user&quot;).password(passwordEncoder().encode(&quot;password&quot;)).roles(&quot;USER&quot;)</span>
+<span class="nc" id="L57">                .and()</span>
+<span class="nc" id="L58">                .withUser(&quot;admin&quot;).password(passwordEncoder().encode(&quot;password&quot;)).roles(&quot;USER&quot;, &quot;ADMIN&quot;);</span>
+
+
+<span class="nc" id="L61">    }</span>
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+<span class="nc" id="L65">        return new BCryptPasswordEncoder();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

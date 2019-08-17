@@ -1,83 +1,209 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.controllers</a> &gt; <span class="el_source">ReservationController.java</span></div><h1>ReservationController.java</h1><pre class="source lang-java linenums">package be.appelicious.controllers;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.controllers</a> &gt; <span class="el_source">ReservationController.java</span></div><h1>ReservationController.java</h1><pre class="source lang-java linenums">package be.appelicious.controllers;
 
 import be.appelicious.domain.Reservation;
 import be.appelicious.interfaces.ReservationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Bart Peeten
+ */
+
 @RestController
-@RequestMapping(path = &quot;api/reservation&quot;)
+@CrossOrigin
+@RequestMapping(path = &quot;/api/reservation&quot;)
 public class ReservationController {
 
     private ReservationService service;
+    private Logger logger;
 
-<span class="nc" id="L21">    public ReservationController(ReservationService reservationService) {</span>
-<span class="nc" id="L22">        this.service = reservationService;</span>
-<span class="nc" id="L23">    }</span>
+<span class="nc" id="L30">    public ReservationController(ReservationService reservationService) {</span>
+<span class="nc" id="L31">        this.logger = LoggerFactory.getLogger(ReservationController.class);</span>
+<span class="nc" id="L32">        this.service = reservationService;</span>
+<span class="nc" id="L33">    }</span>
 
+    /**
+     * Endpoint to GET all reservations
+     */
     @GetMapping(path = &quot;/&quot;)
-    @Transactional(readOnly = true)
     public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getAllReservations() {
-<span class="nc" id="L28">        List&lt;Reservation&gt; reservation = service.getAllReservations();</span>
+<span class="nc" id="L40">        List&lt;Reservation&gt; reservation = service.getAllReservations();</span>
 
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (reservation.spliterator().getExactSizeIfKnown() &gt; 0){</span>
-<span class="nc" id="L31">            return new ResponseEntity&lt;&gt;(reservation, HttpStatus.OK);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (reservation.spliterator().getExactSizeIfKnown() &gt; 0) {</span>
+<span class="nc" id="L43">            return new ResponseEntity&lt;&gt;(reservation, HttpStatus.OK);</span>
         } else {
-<span class="nc" id="L33">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L45">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
         }
     }
 
+    /**
+     * Endpoint to GET all reservations by reservation id
+     */
     @GetMapping(path = &quot;/{id}&quot;)
     public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationById(@PathVariable long id) {
-<span class="nc" id="L39">        return new ResponseEntity&lt;&gt;(service.getReservationById(id), HttpStatus.OK);</span>
+<span class="nc" id="L54">        return new ResponseEntity&lt;&gt;(service.getReservationById(id), HttpStatus.OK);</span>
+    }
+
+    /**
+     * Endpoint to GET number of reservations for a given date and time
+     */
+    @GetMapping(path = &quot;/numberofreservations&quot;)
+    public ResponseEntity&lt;Long&gt; getNumberOfReservationByDateAndTime(@RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                            LocalDate date,
+                                                                    @RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                            LocalTime time) {
+<span class="nc" id="L67">        Long result = service.getNumberOfReservations(date, time);</span>
+
+<span class="nc" id="L69">        return new ResponseEntity&lt;Long&gt;(result, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Endpoint to GET all names of a reservations for a given date and time
+     */
+    @GetMapping(path = &quot;/names&quot;)
+    public ResponseEntity&lt;List&lt;String&gt;&gt; getNamesFromReservationByDateAndTime(@RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                     LocalDate date,
+                                                                             @RequestParam
+                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                                     LocalTime time) {
+<span class="nc" id="L82">        return new ResponseEntity&lt;&gt;(service.getNamesFromReservationByDateAndTime(date, time),</span>
+                HttpStatus.OK);
+    }
+
+    /**
+     * Endpoint to GET all data of a reservations for a given week
+     *
+     * @param datesOfWeek
+     * @return List with Reservations of the given week.
+     */
+    @GetMapping(path = &quot;/weekusers&quot;)
+    public ResponseEntity&lt;List&lt;List&lt;String&gt;&gt;&gt; getReservationNamesForGivenWeek(@RequestParam
+                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                      List&lt;LocalDate&gt; datesOfWeek) {
+<span class="nc" id="L96">        List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L97">        result = service.getReservationNamesForGivenWeek(datesOfWeek);</span>
+
+<span class="nc" id="L99">        return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Endpoint to GET all number of a reservations for a given week
+     *
+     * @param datesOfWeek
+     * @return List with number of Reservations of the given week.
+     */
+    @GetMapping(path = &quot;/weekreservaties&quot;)
+    public ResponseEntity&lt;List&lt;Integer&gt;&gt; getReservationNumbersForGivenWeek(@RequestParam
+                                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                   List&lt;LocalDate&gt; datesOfWeek) {
+<span class="nc" id="L112">        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L113">        result = service.getReservationNumbersForGivenWeek(datesOfWeek);</span>
+
+<span class="nc" id="L115">        return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Endpoint to GET if a participant is reserved for a given date and time
+     *
+     * @param firstname
+     * @param lastname
+     * @param datesOfWeek
+     * @return List with booleans if user is reserved for the given week.
+     */
+    @GetMapping(path = &quot;/isParticipantReserved&quot;)
+    public ResponseEntity&lt;List&lt;Boolean&gt;&gt; getIsParticipantReservedByDateAndTime(@RequestParam String firstname,
+                                                                         @RequestParam String lastname,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                 List&lt;LocalDate&gt; datesOfWeek) {
+<span class="nc" id="L132">        List&lt;Boolean&gt; result = service.getIsParticipantReserved(firstname, lastname, datesOfWeek);</span>
+
+<span class="nc" id="L134">        return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
     }
 
     @GetMapping(path = &quot;/date&quot;)
     public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationsByDate(@RequestParam(&quot;date&quot;)
                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                   LocalDate date) {
+                                                                           LocalDate date) {
 
-<span class="nc" id="L47">        return new ResponseEntity&lt;&gt;(service.getReservationByDate(date), HttpStatus.OK);</span>
+<span class="nc" id="L142">        return new ResponseEntity&lt;&gt;(service.getReservationByDate(date), HttpStatus.OK);</span>
     }
 
     @GetMapping(path = &quot;/date_time&quot;)
     public ResponseEntity&lt;List&lt;Reservation&gt;&gt; getReservationByDateAndTime(@RequestParam
                                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                         LocalDate date,
+                                                                                 LocalDate date,
                                                                          @RequestParam
                                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                         LocalTime time){
-<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(service.getReservationsByDateAndTime(date, time),</span>
+                                                                                 LocalTime time) {
+<span class="nc" id="L152">        return new ResponseEntity&lt;&gt;(service.getReservationsByDateAndTime(date, time),</span>
                 HttpStatus.OK);
     }
 
-    @GetMapping(path = &quot;/names&quot;)
-    public ResponseEntity&lt;List&lt;String&gt;&gt; getNamesFromReservationByDateAndTime(@RequestParam
-                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                             LocalDate date,
-                                                                             @RequestParam
-                                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                             LocalTime time){
-<span class="nc" id="L68">        return new ResponseEntity&lt;&gt;(service.getNamesFromReservationByDateAndTime(date, time),</span>
-                HttpStatus.OK);
-    }
-
-    @PostMapping(path = &quot;/{id}&quot;, consumes = &quot;application/json&quot;)
+    /**
+     * Endpoint to POST a new reservation
+     */
+    @PostMapping(path = &quot;/&quot;, consumes = &quot;application/json&quot;)
     public ResponseEntity&lt;Reservation&gt; addNewReservation(@RequestBody @Valid Reservation reservation) {
-<span class="nc" id="L74">        Reservation result = service.addNewReservation(reservation);</span>
+<span class="nc" id="L161">        Reservation result = service.addNewReservation(reservation);</span>
 
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (result != null) {</span>
-<span class="nc" id="L77">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L164">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
         } else {
-<span class="nc" id="L79">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L166">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
         }
+    }
+
+    /**
+     * Endpoint to POST a new reservation when only fullname is available.
+     */
+    @PostMapping(path = &quot;/onlyname&quot;)
+    public ResponseEntity&lt;Reservation&gt; addNewReservationWithOnlyFullName(@RequestParam String firstname,
+                                                                         @RequestParam String lastname,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                 LocalDate date,
+                                                                         @RequestParam
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                                 LocalTime time) {
+<span class="nc" id="L182">        Reservation result = service.addNewReservationWithOnlyFullName(firstname, lastname, date, time);</span>
+
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L185">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+        } else {
+<span class="nc" id="L187">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    /**
+     * Endpoint to DELETE a new reservation
+     */
+    @DeleteMapping(path = &quot;/delete&quot;)
+    public ResponseEntity&lt;Reservation&gt; removeUserFromReservation(@RequestParam
+                                                                         String firstname,
+                                                                 @RequestParam
+                                                                         String lastname,
+                                                                 @RequestParam
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                         LocalDate date,
+                                                                 @RequestParam
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+                                                                         LocalTime time) {
+<span class="nc" id="L205">        Reservation reservation = service.removeUserFromReservation(firstname, lastname, date, time);</span>
+<span class="nc" id="L206">        return new ResponseEntity&lt;Reservation&gt;(reservation, HttpStatus.OK);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

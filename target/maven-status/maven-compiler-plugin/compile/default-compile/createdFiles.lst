@@ -1,1 +1,17 @@
+be/appelicious/controllers/TrainingsTypeController.class
+be/appelicious/Helpers/RoleHelper.class
+be/appelicious/Go4FitMain.class
 be/appelicious/interfaces/Filters.class
+be/appelicious/SecurityConfiguration.class
+be/appelicious/services/CustomerServiceImpl.class
+be/appelicious/controllers/CustomerController.class
+be/appelicious/interfaces/ReservationService.class
+be/appelicious/domain/User.class
+be/appelicious/interfaces/CustomerService.class
+be/appelicious/controllers/ReservationController.class
+be/appelicious/domain/Reservation.class
+be/appelicious/aspects/GetAspect.class
+be/appelicious/services/ReservationServiceImpl.class
+be/appelicious/filters/DataFilter.class
+be/appelicious/repositories/CustomerRepository.class
+be/appelicious/repositories/ReservationRepository.class

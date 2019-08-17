@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.domain</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package be.appelicious.domain;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Entity
+@Table(name = &quot;go4fit_customer&quot;)
+<span class="fc" id="L11">public class User {</span>
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = &quot;userid&quot;)
+    private Long userId;
+
+    @Column(name = &quot;firstname&quot;)
+    @NotBlank(message = &quot;Voornaam is verplicht!&quot;)
+    private String firstName;
+
+    @Column(name = &quot;lastname&quot;)
+    @NotBlank(message = &quot;Achternaam is verplicht!&quot;)
+    private String lastName;
+
+    @Column(name = &quot;email&quot;)
+    @NotBlank
+    private String email;
+
+    @Column(name = &quot;phone&quot;)
+    @NotBlank
+    private String phone;
+
+    @Column(name = &quot;password&quot;)
+    @NotBlank
+    private String password;
+
+    @Column(name = &quot;enabled&quot;)
+    private int enabled;
+
+    @Column(name = &quot;role&quot;)
+    private String role;
+
+<span class="fc" id="L44">    @ManyToMany(fetch = FetchType.LAZY, mappedBy = &quot;users&quot;)</span>
+    private List&lt;Reservation&gt; reservations = new ArrayList&lt;&gt;();
+
+    public int getEnabled() {
+<span class="nc" id="L48">        return enabled;</span>
+    }
+
+    public void setEnabled(int enabled) {
+<span class="nc" id="L52">        this.enabled = enabled;</span>
+<span class="nc" id="L53">    }</span>
+
+    public Long getUserId() {
+<span class="nc" id="L56">        return userId;</span>
+    }
+
+    public void setUserId(Long userId) {
+<span class="nc" id="L60">        this.userId = userId;</span>
+<span class="nc" id="L61">    }</span>
+
+    public String getFirstName() {
+<span class="nc" id="L64">        return firstName;</span>
+    }
+
+    public void setFirstName(String firstName) {
+<span class="fc" id="L68">        this.firstName = firstName;</span>
+<span class="fc" id="L69">    }</span>
+
+    public String getLastName() {
+<span class="nc" id="L72">        return lastName;</span>
+    }
+
+    public void setLastName(String lastName) {
+<span class="fc" id="L76">        this.lastName = lastName;</span>
+<span class="fc" id="L77">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L80">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="nc" id="L84">        this.email = email;</span>
+<span class="nc" id="L85">    }</span>
+
+    public String getPhone() {
+<span class="nc" id="L88">        return phone;</span>
+    }
+
+    public void setPhone(String phone) {
+<span class="nc" id="L92">        this.phone = phone;</span>
+<span class="nc" id="L93">    }</span>
+
+    public String getPassword() {
+<span class="nc" id="L96">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="nc" id="L100">        this.password = password;</span>
+<span class="nc" id="L101">    }</span>
+
+    public Optional&lt;String&gt; getRole() {
+<span class="nc" id="L104">        return Optional.ofNullable(role);</span>
+    }
+
+    public void setRole(String role) {
+<span class="nc" id="L108">        this.role = role;</span>
+<span class="nc" id="L109">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
