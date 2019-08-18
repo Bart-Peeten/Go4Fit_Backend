@@ -138,14 +138,17 @@ public class ReservationServiceImpl implements ReservationService {
                 if (!result.isEmpty()) {
                     for (Reservation reservation : result) {
                         if (!reservation.getUsers().isEmpty()) {
+                            boolean userReserved = false;
                             for (User user : reservation.getUsers()) {
                                 if (user.getFirstName().equals(firstname) &&
                                         user.getLastName().equals(lastname)) {
-                                    isReservedList.add(true);
+                                    userReserved = true;
+                                    break;
                                 } else {
-                                    isReservedList.add(false);
+                                    userReserved = false;
                                 }
                             }
+                            isReservedList.add(userReserved);
                         } else {
                             isReservedList.add(false);
                         }
