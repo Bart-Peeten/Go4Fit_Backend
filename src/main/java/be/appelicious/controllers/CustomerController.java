@@ -1,7 +1,6 @@
 package be.appelicious.controllers;
 
 import be.appelicious.Helpers.RoleHelper;
-import be.appelicious.domain.Reservation;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import org.slf4j.Logger;
@@ -11,9 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
-import javax.validation.Valid;
-import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -104,14 +100,14 @@ public class CustomerController {
     }
 
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<User> removeUser(@RequestParam
+    public ResponseEntity removeUser(@RequestParam
                                                    String firstname,
-                                           @RequestParam
+                                     @RequestParam
                                                    String lastname) {
         boolean result = service.removeUser(firstname, lastname);
 
         if (result) {
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

@@ -27,6 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public User save(User user) {
+        user.setFirstName(user.getFirstName().trim());
+        user.setLastName(user.getLastName().trim());
 
         return customerRepository.save(user);
     }

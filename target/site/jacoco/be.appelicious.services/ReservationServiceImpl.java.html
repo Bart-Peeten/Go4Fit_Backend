@@ -138,67 +138,70 @@ public class ReservationServiceImpl implements ReservationService {
 <span class="nc bnc" id="L138" title="All 2 branches missed.">                if (!result.isEmpty()) {</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">                    for (Reservation reservation : result) {</span>
 <span class="nc bnc" id="L140" title="All 2 branches missed.">                        if (!reservation.getUsers().isEmpty()) {</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">                            for (User user : reservation.getUsers()) {</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">                                if (user.getFirstName().equals(firstname) &amp;&amp;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                                        user.getLastName().equals(lastname)) {</span>
-<span class="nc" id="L144">                                    isReservedList.add(true);</span>
+<span class="nc" id="L141">                            boolean userReserved = false;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                            for (User user : reservation.getUsers()) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                                if (user.getFirstName().equals(firstname) &amp;&amp;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                                        user.getLastName().equals(lastname)) {</span>
+<span class="nc" id="L145">                                    userReserved = true;</span>
+<span class="nc" id="L146">                                    break;</span>
                                 } else {
-<span class="nc" id="L146">                                    isReservedList.add(false);</span>
+<span class="nc" id="L148">                                    userReserved = false;</span>
                                 }
-<span class="nc" id="L148">                            }</span>
-                        } else {
-<span class="nc" id="L150">                            isReservedList.add(false);</span>
+<span class="nc" id="L150">                            }</span>
+<span class="nc" id="L151">                            isReservedList.add(userReserved);</span>
+<span class="nc" id="L152">                        } else {</span>
+<span class="nc" id="L153">                            isReservedList.add(false);</span>
                         }
-<span class="nc" id="L152">                    }</span>
+<span class="nc" id="L155">                    }</span>
                 } else {
-<span class="nc" id="L154">                    isReservedList.add(false);</span>
+<span class="nc" id="L157">                    isReservedList.add(false);</span>
                 }
             }
-<span class="nc" id="L157">            index++;</span>
-<span class="nc" id="L158">        }</span>
+<span class="nc" id="L160">            index++;</span>
+<span class="nc" id="L161">        }</span>
 
-<span class="nc" id="L160">        return isReservedList;</span>
+<span class="nc" id="L163">        return isReservedList;</span>
     }
 
     @Override
     @Transactional
     public Reservation addNewReservation(Reservation reservation) {
-<span class="nc" id="L166">        User userResult = null;</span>
-<span class="nc" id="L167">        List&lt;User&gt; newUser = reservation.getUsers();</span>
-<span class="nc" id="L168">        Reservation reservationResult = repo.findByDateAndTime(reservation.getDate(), reservation.getTime());</span>
+<span class="nc" id="L169">        User userResult = null;</span>
+<span class="nc" id="L170">        List&lt;User&gt; newUser = reservation.getUsers();</span>
+<span class="nc" id="L171">        Reservation reservationResult = repo.findByDateAndTime(reservation.getDate(), reservation.getTime());</span>
         // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
-<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (reservationResult == null) {</span>
-<span class="nc" id="L171">            return repo.save(reservation);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if (reservationResult == null) {</span>
+<span class="nc" id="L174">            return repo.save(reservation);</span>
         } else {
-<span class="nc" id="L173">            reservation.getUsers().forEach(item -&gt; {</span>
-<span class="nc" id="L174">                item.setUserId(getIdOfExistingUser(item));</span>
-<span class="nc" id="L175">                reservationResult.getUsers().add(item);</span>
-<span class="nc" id="L176">            });</span>
+<span class="nc" id="L176">            reservation.getUsers().forEach(item -&gt; {</span>
+<span class="nc" id="L177">                item.setUserId(getIdOfExistingUser(item));</span>
+<span class="nc" id="L178">                reservationResult.getUsers().add(item);</span>
+<span class="nc" id="L179">            });</span>
 
-<span class="nc" id="L178">            return repo.save(reservationResult);</span>
+<span class="nc" id="L181">            return repo.save(reservationResult);</span>
         }
     }
 
     @Override
     @Transactional
     public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time) {
-<span class="nc" id="L185">        List&lt;User&gt; userList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L186">        User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (newUser != null) {</span>
-<span class="nc" id="L188">            userList.add(newUser);</span>
+<span class="nc" id="L188">        List&lt;User&gt; userList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L189">        User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (newUser != null) {</span>
+<span class="nc" id="L191">            userList.add(newUser);</span>
         }
 
-<span class="nc" id="L191">        Reservation reservationResult = repo.findByDateAndTime(date, time);</span>
+<span class="nc" id="L194">        Reservation reservationResult = repo.findByDateAndTime(date, time);</span>
         // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
-<span class="nc bnc" id="L193" title="All 2 branches missed.">        if (reservationResult == null) {</span>
-<span class="nc" id="L194">            Reservation newReservation = new Reservation();</span>
-<span class="nc" id="L195">            newReservation.setDate(date);</span>
-<span class="nc" id="L196">            newReservation.setTime(time);</span>
-<span class="nc" id="L197">            newReservation.setUsers(userList);</span>
-<span class="nc" id="L198">            return repo.save(newReservation);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (reservationResult == null) {</span>
+<span class="nc" id="L197">            Reservation newReservation = new Reservation();</span>
+<span class="nc" id="L198">            newReservation.setDate(date);</span>
+<span class="nc" id="L199">            newReservation.setTime(time);</span>
+<span class="nc" id="L200">            newReservation.setUsers(userList);</span>
+<span class="nc" id="L201">            return repo.save(newReservation);</span>
         } else {
-<span class="nc" id="L200">            reservationResult.getUsers().add(newUser);</span>
-<span class="nc" id="L201">            return repo.save(reservationResult);</span>
+<span class="nc" id="L203">            reservationResult.getUsers().add(newUser);</span>
+<span class="nc" id="L204">            return repo.save(reservationResult);</span>
         }
     }
 
@@ -206,67 +209,67 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time) {
         // First get reservation for given date and time.
-<span class="nc" id="L209">        Reservation reservationResult = repo.findByDateAndTime(date, time);</span>
+<span class="nc" id="L212">        Reservation reservationResult = repo.findByDateAndTime(date, time);</span>
 
         // fetch existing names from reservation result and find the given user in the fetch result.
-<span class="nc" id="L212">        String givenFullname = firstname.toLowerCase() + &quot; &quot; + lastname.toLowerCase();</span>
-<span class="nc" id="L213">        List&lt;String&gt; namesList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L214">        reservationResult.getUsers().forEach(item -&gt; namesList.add(item.getFirstName().toLowerCase() + &quot; &quot; + item.getLastName().toLowerCase()));</span>
-<span class="nc" id="L215">        int index = namesList.indexOf(givenFullname);</span>
+<span class="nc" id="L215">        String givenFullname = firstname.toLowerCase() + &quot; &quot; + lastname.toLowerCase();</span>
+<span class="nc" id="L216">        List&lt;String&gt; namesList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L217">        reservationResult.getUsers().forEach(item -&gt; namesList.add(item.getFirstName().toLowerCase() + &quot; &quot; + item.getLastName().toLowerCase()));</span>
+<span class="nc" id="L218">        int index = namesList.indexOf(givenFullname);</span>
 
         // If the array of reservationResult.getUsers() is empty
         // or the index is not in reservationResult.getUsers() range
         // return the original reservationResult.getUsers().
-<span class="nc bnc" id="L220" title="All 4 branches missed.">        if (reservationResult.getUsers() == null</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">        if (reservationResult.getUsers() == null</span>
                 || index &lt; 0
-<span class="nc bnc" id="L222" title="All 2 branches missed.">                || index &gt;= reservationResult.getUsers().size()) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                || index &gt;= reservationResult.getUsers().size()) {</span>
 
-<span class="nc" id="L224">            return repo.save(reservationResult);</span>
+<span class="nc" id="L227">            return repo.save(reservationResult);</span>
         }
         // Create another array
-<span class="nc" id="L227">        List&lt;User&gt; tmpArray = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L230">        List&lt;User&gt; tmpArray = new ArrayList&lt;&gt;();</span>
         // Copy the elements except the index
         // from original array to the other array
-<span class="nc" id="L230">        int size = reservationResult.getUsers().size();</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">            if (i == index) {</span>
-<span class="nc" id="L233">                continue;</span>
+<span class="nc" id="L233">        int size = reservationResult.getUsers().size();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">            if (i == index) {</span>
+<span class="nc" id="L236">                continue;</span>
             }
-<span class="nc" id="L235">            tmpArray.add(reservationResult.getUsers().get(i));</span>
+<span class="nc" id="L238">            tmpArray.add(reservationResult.getUsers().get(i));</span>
         }
-<span class="nc" id="L237">        reservationResult.setUsers(tmpArray);</span>
+<span class="nc" id="L240">        reservationResult.setUsers(tmpArray);</span>
 
-<span class="nc" id="L239">        return repo.save(reservationResult);</span>
+<span class="nc" id="L242">        return repo.save(reservationResult);</span>
     }
 
     private long getIdOfExistingUser(User user) {
-<span class="nc" id="L243">        User result = customerRepository.findByEmail(user.getEmail());</span>
+<span class="nc" id="L246">        User result = customerRepository.findByEmail(user.getEmail());</span>
 
-<span class="nc" id="L245">        return result.getUserId();</span>
+<span class="nc" id="L248">        return result.getUserId();</span>
     }
 
     private List&lt;String&gt; parseFullNames(List&lt;Reservation&gt; result) {
-<span class="nc" id="L249">        List&lt;String&gt; tmpList = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L250">        result.forEach(item -&gt; {</span>
-<span class="nc" id="L251">            List&lt;User&gt; userList = item.getUsers();</span>
-<span class="nc" id="L252">            userList.forEach(user -&gt; {</span>
-<span class="nc" id="L253">                String fullName = user.getFirstName() + &quot; &quot; + user.getLastName();</span>
-<span class="nc" id="L254">                tmpList.add(fullName);</span>
-<span class="nc" id="L255">            });</span>
-<span class="nc" id="L256">        });</span>
+<span class="nc" id="L252">        List&lt;String&gt; tmpList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L253">        result.forEach(item -&gt; {</span>
+<span class="nc" id="L254">            List&lt;User&gt; userList = item.getUsers();</span>
+<span class="nc" id="L255">            userList.forEach(user -&gt; {</span>
+<span class="nc" id="L256">                String fullName = user.getFirstName() + &quot; &quot; + user.getLastName();</span>
+<span class="nc" id="L257">                tmpList.add(fullName);</span>
+<span class="nc" id="L258">            });</span>
+<span class="nc" id="L259">        });</span>
 
-<span class="nc" id="L258">        return tmpList;</span>
+<span class="nc" id="L261">        return tmpList;</span>
     }
 
     private String[][] filltimes() {
-<span class="nc" id="L262">        String tuesday[] = {&quot;19:00&quot;, &quot;20:00&quot;};</span>
-<span class="nc" id="L263">        String wednesday[] = {&quot;09:00&quot;, &quot;19:00&quot;, &quot;20:00&quot;};</span>
-<span class="nc" id="L264">        String thursday[] = {&quot;19:00&quot;};</span>
-<span class="nc" id="L265">        String sunday[] = {&quot;08:00&quot;, &quot;09:00&quot;, &quot;10:00&quot;};</span>
+<span class="nc" id="L265">        String tuesday[] = {&quot;19:00&quot;, &quot;20:00&quot;};</span>
+<span class="nc" id="L266">        String wednesday[] = {&quot;09:00&quot;, &quot;19:00&quot;, &quot;20:00&quot;};</span>
+<span class="nc" id="L267">        String thursday[] = {&quot;19:00&quot;};</span>
+<span class="nc" id="L268">        String sunday[] = {&quot;08:00&quot;, &quot;09:00&quot;, &quot;10:00&quot;};</span>
 
-<span class="nc" id="L267">        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, sunday};</span>
+<span class="nc" id="L270">        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, sunday};</span>
 
-<span class="nc" id="L269">        return tmpArray;</span>
+<span class="nc" id="L272">        return tmpArray;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

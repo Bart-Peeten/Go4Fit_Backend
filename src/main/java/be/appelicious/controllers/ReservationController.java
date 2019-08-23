@@ -125,10 +125,10 @@ public class ReservationController {
      */
     @GetMapping(path = "/isParticipantReserved")
     public ResponseEntity<List<Boolean>> getIsParticipantReservedByDateAndTime(@RequestParam String firstname,
-                                                                         @RequestParam String lastname,
-                                                                         @RequestParam
-                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                 List<LocalDate> datesOfWeek) {
+                                                                               @RequestParam String lastname,
+                                                                               @RequestParam
+                                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                       List<LocalDate> datesOfWeek) {
         List<Boolean> result = service.getIsParticipantReserved(firstname, lastname, datesOfWeek);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -193,7 +193,7 @@ public class ReservationController {
      */
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam
-                                                                         String firstname,
+                                                                             String firstname,
                                                                  @RequestParam
                                                                          String lastname,
                                                                  @RequestParam
