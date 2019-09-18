@@ -3,6 +3,8 @@ package be.appelicious.services;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import be.appelicious.repositories.CustomerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Logger logger;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        this.logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
     }
 
     @Override
@@ -34,8 +38,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return customerRepository.findByEmail(email);
+    public Boolean findByEmail(String email, String password) {
+        logger.info("De gebruiker met  {} probeert aan te melden met passwoord {}.", email, password);
+        User result  = customerRepository.findByEmail(email);
+        if (bCryptPasswordEncoder.matches(password, result.getPassword())) {
+            return true;
+        }
+        return false;
     }
 
     @Override

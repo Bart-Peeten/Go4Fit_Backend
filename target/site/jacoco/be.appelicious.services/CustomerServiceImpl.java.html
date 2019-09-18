@@ -27,22 +27,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public User save(User user) {
+<span class="nc" id="L30">        user.setFirstName(user.getFirstName().trim());</span>
+<span class="nc" id="L31">        user.setLastName(user.getLastName().trim());</span>
 
-<span class="nc" id="L31">        return customerRepository.save(user);</span>
+<span class="nc" id="L33">        return customerRepository.save(user);</span>
     }
 
     @Override
     public User findByEmail(String email) {
-<span class="nc" id="L36">        return customerRepository.findByEmail(email);</span>
+<span class="nc" id="L38">        return customerRepository.findByEmail(email);</span>
     }
 
     @Override
     @Secured(&quot;ROLE_ADMIN&quot;)
     public boolean removeUser(String firstname, String lastname) {
-<span class="nc" id="L42">        int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);</span>
+<span class="nc" id="L44">        int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);</span>
 
         // If isRemoved is greater then 0 then there is a user deleted, so return true else return false.
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        return isremoved &gt; 0;</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        return isremoved &gt; 0;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

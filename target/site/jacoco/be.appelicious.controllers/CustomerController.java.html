@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.controllers</a> &gt; <span class="el_source">CustomerController.java</span></div><h1>CustomerController.java</h1><pre class="source lang-java linenums">package be.appelicious.controllers;
 
 import be.appelicious.Helpers.RoleHelper;
-import be.appelicious.domain.Reservation;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import org.slf4j.Logger;
@@ -11,9 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
-import javax.validation.Valid;
-import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -29,20 +25,20 @@ public class CustomerController {
     private CustomerService service;
     private Logger logger;
 
-<span class="nc" id="L32">    public CustomerController(CustomerService service) {</span>
-<span class="nc" id="L33">        this.service = service;</span>
-<span class="nc" id="L34">        this.logger = LoggerFactory.getLogger(ReservationController.class);</span>
-<span class="nc" id="L35">        this.encoder = new BCryptPasswordEncoder();</span>
-<span class="nc" id="L36">    }</span>
+<span class="nc" id="L28">    public CustomerController(CustomerService service) {</span>
+<span class="nc" id="L29">        this.service = service;</span>
+<span class="nc" id="L30">        this.logger = LoggerFactory.getLogger(ReservationController.class);</span>
+<span class="nc" id="L31">        this.encoder = new BCryptPasswordEncoder();</span>
+<span class="nc" id="L32">    }</span>
 
     // Endpoint to get all users.
     @GetMapping(path = &quot;/&quot;)
     public ResponseEntity&lt;List&lt;User&gt;&gt; getAllUsers() {
-<span class="nc" id="L41">        List&lt;User&gt; result = service.getAllUsers();</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (result != null) {</span>
-<span class="nc" id="L43">            return new ResponseEntity&lt;&gt;(result, HttpStatus.ACCEPTED);</span>
+<span class="nc" id="L37">        List&lt;User&gt; result = service.getAllUsers();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L39">            return new ResponseEntity&lt;&gt;(result, HttpStatus.ACCEPTED);</span>
         } else {
-<span class="nc" id="L45">            return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
+<span class="nc" id="L41">            return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
         }
     }
 
@@ -50,26 +46,26 @@ public class CustomerController {
     @GetMapping(path = &quot;/login&quot;)
     public ResponseEntity&lt;User&gt; doesUserExist(@RequestParam String useremail,
                                               @RequestParam String userPassword) {
-<span class="nc" id="L53">        User result = service.findByEmail(useremail);</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (result != null) {</span>
-<span class="nc" id="L55">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+<span class="nc" id="L49">        User result = service.findByEmail(useremail);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L51">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
         } else {
-<span class="nc" id="L57">            return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
+<span class="nc" id="L53">            return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
         }
     }
 
     @GetMapping(path = &quot;/admin&quot;)
     public ResponseEntity&lt;Boolean&gt; isUserAdmin(@RequestParam String useremail,
                                                @RequestParam String userPassword) {
-<span class="nc" id="L64">        User result = service.findByEmail(useremail);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (result != null) {</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (result.getRole().equals(&quot;ROLE_ADMIN&quot;)) {</span>
-<span class="nc" id="L67">                return new ResponseEntity&lt;&gt;(true, HttpStatus.OK);</span>
+<span class="nc" id="L60">        User result = service.findByEmail(useremail);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (result.getRole().equals(&quot;ROLE_ADMIN&quot;)) {</span>
+<span class="nc" id="L63">                return new ResponseEntity&lt;&gt;(true, HttpStatus.OK);</span>
             } else {
-<span class="nc" id="L69">                return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
+<span class="nc" id="L65">                return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
             }
         }
-<span class="nc" id="L72">        return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
+<span class="nc" id="L68">        return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
     }
 
     @PostMapping(path = &quot;/registration&quot;, consumes = &quot;application/json&quot;)
@@ -77,43 +73,43 @@ public class CustomerController {
         /* If a customer signs up there will no role be passed in the Customer object
          *  so, if the role field is empty it will be filled with the USER role.
          *  Otherwise the creation of a new user will be done by Postman to create the admin accounts. */
-<span class="nc" id="L80">            User newUser = new User();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (!user.getRole().isPresent()) {</span>
-<span class="nc" id="L82">            newUser.setRole(RoleHelper.USER);</span>
+<span class="nc" id="L76">            User newUser = new User();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (!user.getRole().isPresent()) {</span>
+<span class="nc" id="L78">            newUser.setRole(RoleHelper.USER);</span>
         } else {
-<span class="nc" id="L84">            newUser.setRole(user.getRole().orElse(null));</span>
+<span class="nc" id="L80">            newUser.setRole(user.getRole().orElse(null));</span>
         }
-<span class="nc" id="L86">        System.out.println(&quot;De inkomende user is: &quot;);</span>
-<span class="nc" id="L87">        System.out.println(user.getFirstName() + &quot; &quot; + user.getLastName());</span>
-<span class="nc" id="L88">        newUser.setFirstName(user.getFirstName());</span>
-<span class="nc" id="L89">        newUser.setLastName(user.getLastName());</span>
-<span class="nc" id="L90">        newUser.setEmail(user.getEmail());</span>
-<span class="nc" id="L91">        newUser.setPhone(user.getPhone());</span>
-<span class="nc" id="L92">        newUser.setEnabled(user.getEnabled());</span>
-<span class="nc" id="L93">        String paswd = user.getPassword();</span>
-<span class="nc" id="L94">        String encryptedPaswd = encoder.encode(paswd);</span>
-<span class="nc" id="L95">        newUser.setPassword(encryptedPaswd);</span>
+<span class="nc" id="L82">        System.out.println(&quot;De inkomende user is: &quot;);</span>
+<span class="nc" id="L83">        System.out.println(user.getFirstName() + &quot; &quot; + user.getLastName());</span>
+<span class="nc" id="L84">        newUser.setFirstName(user.getFirstName());</span>
+<span class="nc" id="L85">        newUser.setLastName(user.getLastName());</span>
+<span class="nc" id="L86">        newUser.setEmail(user.getEmail());</span>
+<span class="nc" id="L87">        newUser.setPhone(user.getPhone());</span>
+<span class="nc" id="L88">        newUser.setEnabled(user.getEnabled());</span>
+<span class="nc" id="L89">        String paswd = user.getPassword();</span>
+<span class="nc" id="L90">        String encryptedPaswd = encoder.encode(paswd);</span>
+<span class="nc" id="L91">        newUser.setPassword(encryptedPaswd);</span>
 
-<span class="nc" id="L97">        User result = service.save(newUser);</span>
+<span class="nc" id="L93">        User result = service.save(newUser);</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (result != null) {</span>
-<span class="nc" id="L100">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (result != null) {</span>
+<span class="nc" id="L96">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
         } else {
-<span class="nc" id="L102">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L98">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
         }
     }
 
     @DeleteMapping(path = &quot;/delete&quot;)
-    public ResponseEntity&lt;User&gt; removeUser(@RequestParam
+    public ResponseEntity removeUser(@RequestParam
                                                    String firstname,
-                                           @RequestParam
+                                     @RequestParam
                                                    String lastname) {
-<span class="nc" id="L111">        boolean result = service.removeUser(firstname, lastname);</span>
+<span class="nc" id="L107">        boolean result = service.removeUser(firstname, lastname);</span>
 
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (result) {</span>
-<span class="nc" id="L114">            return new ResponseEntity(HttpStatus.OK);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (result) {</span>
+<span class="nc" id="L110">            return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
         }
-<span class="nc" id="L116">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L112">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
