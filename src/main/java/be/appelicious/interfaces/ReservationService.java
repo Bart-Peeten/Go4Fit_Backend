@@ -20,7 +20,7 @@ public interface ReservationService {
     List<String> getNamesFromReservationByDateAndTime(LocalDate date, LocalTime time);
     List<List<String>> getReservationNamesForGivenWeek(List<LocalDate> dates);
     Reservation addNewReservation(Reservation reservation);
-    Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time);
+    Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time, String isAllowed);
     List<Integer> getReservationNumbersForGivenWeek(List<LocalDate> datesOfWeek);
     Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time);
     List<Boolean> getIsParticipantReserved(String firstname, String lastname, List<LocalDate> datesOfWeek);

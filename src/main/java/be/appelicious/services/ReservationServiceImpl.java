@@ -9,11 +9,9 @@ import be.appelicious.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -207,7 +205,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time) {
+    public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time, String isAllowed) {
         // First get reservation for given date and time.
         Reservation reservationResult = repo.findByDateAndTime(date, time);
 

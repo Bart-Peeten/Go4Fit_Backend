@@ -174,11 +174,9 @@ public class ReservationController {
     public ResponseEntity<Reservation> addNewReservationWithOnlyFullName(@RequestParam String firstname,
                                                                          @RequestParam String lastname,
                                                                          @RequestParam
-                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                 LocalDate date,
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                                          @RequestParam
-                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                                 LocalTime time) {
+                                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time) {
         Reservation result = service.addNewReservationWithOnlyFullName(firstname, lastname, date, time);
 
         if (result != null) {
@@ -192,17 +190,14 @@ public class ReservationController {
      * Endpoint to DELETE a new reservation
      */
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam
-                                                                             String firstname,
+    public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam String firstname,
+                                                                 @RequestParam String lastname,
                                                                  @RequestParam
-                                                                         String lastname,
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                                  @RequestParam
-                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                         LocalDate date,
-                                                                 @RequestParam
-                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                         LocalTime time) {
-        Reservation reservation = service.removeUserFromReservation(firstname, lastname, date, time);
+                                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time,
+                                                                 @RequestParam String isAllowed) {
+        Reservation reservation = service.removeUserFromReservation(firstname, lastname, date, time, isAllowed);
         return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
     }
 }
