@@ -172,9 +172,9 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
         List<User> newUser = reservation.getUsers();
-        // Set by default the RemovedReservation flag to true.
+        // Set by default the RemovedReservation flag to false.
         if (reservation.getUsers().size() == 1) {
-            reservation.getUsers().get(0).setRemovedReservation(true);
+            reservation.getUsers().get(0).setRemovedReservation(false);
         }
         Reservation reservationResult = repo.findByDateAndTime(reservation.getDate(), reservation.getTime());
         // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
@@ -198,8 +198,8 @@ public class ReservationServiceImpl implements ReservationService {
         List<User> userList = new ArrayList<>();
         User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
         if (newUser != null) {
-            // By default set the RemovedReservation to true.
-            newUser.setRemovedReservation(true);
+            // By default set the RemovedReservation to false.
+            newUser.setRemovedReservation(false);
             userList.add(newUser);
         }
 
@@ -239,7 +239,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         // If the user is allowed to delete his reservation.
         if (isAllowedToRemoveReservation) {
-
             // Create another array
             List<User> tmpArray = new ArrayList<>();
             /* Copy the elements except the index
@@ -253,7 +252,7 @@ public class ReservationServiceImpl implements ReservationService {
             }
             reservationResult.setUsers(tmpArray);
         } else {
-
+            reservationResult.getUsers().get(index).setRemovedReservation(true);
         }
 
         return repo.save(reservationResult);
