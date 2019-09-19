@@ -41,6 +41,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "removedReservation")
+    private Boolean removedReservation;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -106,5 +109,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Boolean getRemovedReservation() {
+        return removedReservation;
+    }
+
+    public void setRemovedReservation(Boolean removedReservation) {
+        this.removedReservation = removedReservation;
     }
 }

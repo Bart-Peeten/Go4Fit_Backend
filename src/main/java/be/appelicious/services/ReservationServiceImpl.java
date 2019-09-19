@@ -2,17 +2,20 @@ package be.appelicious.services;
 
 import be.appelicious.domain.Reservation;
 import be.appelicious.domain.User;
+import be.appelicious.interfaces.CrudHelper;
 import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.CustomerRepository;
 import be.appelicious.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Bart Peeten
@@ -24,13 +27,16 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepository repo;
     private CustomerRepository customerRepository;
     private Filters filter;
+    private CrudHelper crudHelper;
     private static final String NO_RESERVATION = "Nog geen reservaties!";
 
     public ReservationServiceImpl(ReservationRepository repo,
                                   CustomerRepository customerRepository,
-                                  Filters filter) {
+                                  Filters filter,
+                                  CrudHelper crudHelper) {
         this.repo = repo;
         this.filter = filter;
+        this.crudHelper = crudHelper;
         this.customerRepository = customerRepository;
     }
 
@@ -166,14 +172,20 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
         List<User> newUser = reservation.getUsers();
+        // Set by default the RemovedReservation flag to true.
+        if (reservation.getUsers().size() == 1) {
+            reservation.getUsers().get(0).setRemovedReservation(true);
+        }
         Reservation reservationResult = repo.findByDateAndTime(reservation.getDate(), reservation.getTime());
         // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
         if (reservationResult == null) {
             return repo.save(reservation);
         } else {
             reservation.getUsers().forEach(item -> {
-                item.setUserId(getIdOfExistingUser(item));
-                reservationResult.getUsers().add(item);
+                if (!crudHelper.isAlreadyReserved(item, reservationResult)) {
+                    item.setUserId(getIdOfExistingUser(item));
+                    reservationResult.getUsers().add(item);
+                }
             });
 
             return repo.save(reservationResult);
@@ -181,11 +193,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time) {
         List<User> userList = new ArrayList<>();
         User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
         if (newUser != null) {
+            // By default set the RemovedReservation to true.
+            newUser.setRemovedReservation(true);
             userList.add(newUser);
         }
 
@@ -198,6 +212,7 @@ public class ReservationServiceImpl implements ReservationService {
             newReservation.setUsers(userList);
             return repo.save(newReservation);
         } else {
+            if (!crudHelper.isAlreadyReserved(newUser, reservationResult))
             reservationResult.getUsers().add(newUser);
             return repo.save(reservationResult);
         }
@@ -206,14 +221,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     @Transactional
     public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time, String isAllowed) {
+        boolean isAllowedToRemoveReservation = Boolean.valueOf(isAllowed);
         // First get reservation for given date and time.
         Reservation reservationResult = repo.findByDateAndTime(date, time);
 
-        // fetch existing names from reservation result and find the given user in the fetch result.
-        String givenFullname = firstname.toLowerCase() + " " + lastname.toLowerCase();
-        List<String> namesList = new ArrayList<>();
-        reservationResult.getUsers().forEach(item -> namesList.add(item.getFirstName().toLowerCase() + " " + item.getLastName().toLowerCase()));
-        int index = namesList.indexOf(givenFullname);
+        int index = getIndex(firstname, lastname, reservationResult);
 
         // If the array of reservationResult.getUsers() is empty
         // or the index is not in reservationResult.getUsers() range
@@ -224,20 +236,35 @@ public class ReservationServiceImpl implements ReservationService {
 
             return repo.save(reservationResult);
         }
-        // Create another array
-        List<User> tmpArray = new ArrayList<>();
-        // Copy the elements except the index
-        // from original array to the other array
-        int size = reservationResult.getUsers().size();
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                continue;
+
+        // If the user is allowed to delete his reservation.
+        if (isAllowedToRemoveReservation) {
+
+            // Create another array
+            List<User> tmpArray = new ArrayList<>();
+            /* Copy the elements except the index
+               from original array to the other array
+             */
+            for (int i = 0; i < reservationResult.getUsers().size(); i++) {
+                if (i == index) {
+                    continue;
+                }
+                tmpArray.add(reservationResult.getUsers().get(i));
             }
-            tmpArray.add(reservationResult.getUsers().get(i));
+            reservationResult.setUsers(tmpArray);
+        } else {
+
         }
-        reservationResult.setUsers(tmpArray);
 
         return repo.save(reservationResult);
+    }
+
+    private int getIndex(String firstname, String lastname, Reservation reservationResult) {
+        // fetch existing names from reservation result and find the given user in the fetch result.
+        String givenFullname = firstname.toLowerCase() + " " + lastname.toLowerCase();
+        List<String> namesList = new ArrayList<>();
+        reservationResult.getUsers().forEach(item -> namesList.add(item.getFirstName().toLowerCase() + " " + item.getLastName().toLowerCase()));
+        return namesList.indexOf(givenFullname);
     }
 
     private long getIdOfExistingUser(User user) {
