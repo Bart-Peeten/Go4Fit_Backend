@@ -7,6 +7,6 @@ import java.util.List;
 public interface CustomerService {
     List<User> getAllUsers();
     User save(User user);
-    Boolean findByEmail(String email, String password);
+    User findByEmail(String email, String password);
     boolean removeUser(String firstname, String lastname);
 }

@@ -44,9 +44,9 @@ public class CustomerController {
 
 
     @GetMapping(path = "/login")
-    public ResponseEntity<Boolean> doesUserExist(@RequestParam String useremail,
+    public ResponseEntity<User> doesUserExist(@RequestParam String useremail,
                                               @RequestParam String userPassword) {
-        Boolean result = service.findByEmail(useremail, userPassword);
+        User result = service.findByEmail(useremail, userPassword);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -55,16 +55,16 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/admin")
-    public ResponseEntity<Boolean> isUserAdmin(@RequestParam String useremail,
+    public ResponseEntity<User> isUserAdmin(@RequestParam String useremail,
                                                @RequestParam String userPassword) {
-        Boolean result = service.findByEmail(useremail, userPassword);
-        /*if (result != null) {
+        User result = service.findByEmail(useremail, userPassword);
+        if (result != null) {
             if (result.getRole().equals("ROLE_ADMIN")) {
-                return new ResponseEntity<>(true, HttpStatus.OK);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-        }*/
+        }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 

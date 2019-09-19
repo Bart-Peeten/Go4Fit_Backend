@@ -1,5 +1,6 @@
 package be.appelicious.services;
 
+import be.appelicious.Helpers.RoleHelper;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import be.appelicious.repositories.CustomerRepository;
@@ -38,17 +39,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Boolean findByEmail(String email, String password) {
+    @Secured({RoleHelper.ADMIN, RoleHelper.USER})
+    public User findByEmail(String email, String password) {
         logger.info("De gebruiker met  {} probeert aan te melden met passwoord {}.", email, password);
         User result  = customerRepository.findByEmail(email);
-        if (bCryptPasswordEncoder.matches(password, result.getPassword())) {
-            return true;
-        }
-        return false;
+
+        return result;
     }
 
     @Override
-    @Secured("ROLE_ADMIN")
+    @Secured(RoleHelper.ADMIN)
     public boolean removeUser(String firstname, String lastname) {
         int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);
 
