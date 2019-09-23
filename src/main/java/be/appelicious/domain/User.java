@@ -1,5 +1,7 @@
 package be.appelicious.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "removedReservation")
+    @Column(name = "removedReservation", columnDefinition = "boolean default false")
     private Boolean removedReservation;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
