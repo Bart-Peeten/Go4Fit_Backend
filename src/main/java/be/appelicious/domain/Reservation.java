@@ -26,6 +26,12 @@ public class Reservation {
             inverseJoinColumns = {@JoinColumn(name = "customerId", nullable = false, updatable = false)})
     private List<User> users = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "go4fit_cancellation_customer",
+            joinColumns = {@JoinColumn(name = "id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "customerId", nullable = false, updatable = false)})
+    private List<User> cancelledUsers = new ArrayList<>();
+
     public List<User> getUsers() {
         return users;
     }
@@ -56,5 +62,13 @@ public class Reservation {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public List<User> getCancelledUsers() {
+        return cancelledUsers;
+    }
+
+    public void setCancelledUsers(List<User> cancelledUsers) {
+        this.cancelledUsers = cancelledUsers;
     }
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Secured({RoleHelper.ADMIN, RoleHelper.USER})
     public User findByEmail(String email, String password) {
-        logger.info("De gebruiker met  {} probeert aan te melden met passwoord {}.", email, password);
+        logger.info("De gebruiker met  {} probeert aan te melden.", email);
         User result  = customerRepository.findByEmail(email);
 
         return result;
@@ -49,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Secured(RoleHelper.ADMIN)
+    @Transactional
     public boolean removeUser(String firstname, String lastname) {
         int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);
 

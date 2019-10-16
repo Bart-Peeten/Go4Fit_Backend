@@ -99,7 +99,7 @@ public class CustomerController {
         }
     }
 
-    @PutMapping(path = "/delete")
+    @DeleteMapping(path = "/delete")
     public ResponseEntity removeUser(@RequestParam
                                                    String firstname,
                                      @RequestParam

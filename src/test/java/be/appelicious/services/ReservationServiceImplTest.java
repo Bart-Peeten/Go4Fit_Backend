@@ -1,8 +1,10 @@
 package be.appelicious.services;
 
+import be.appelicious.Helpers.CrudHelperImpl;
 import be.appelicious.domain.User;
 import be.appelicious.domain.Reservation;
 import be.appelicious.filters.DataFilter;
+import be.appelicious.interfaces.CrudHelper;
 import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.CustomerRepository;
@@ -14,7 +16,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import static org.assertj.core.api.Assertions.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import java.time.LocalDate;
@@ -31,6 +33,7 @@ public class ReservationServiceImplTest {
     @Mock
     private CustomerRepository mockCustomerRepository;
     private Filters filter;
+    private CrudHelper crudHelper;
     private ReservationService service;
     private LocalDate date;
     private LocalTime time;
@@ -39,6 +42,7 @@ public class ReservationServiceImplTest {
 
     public ReservationServiceImplTest() {
         this.filter = new DataFilter();
+        this.crudHelper = new CrudHelperImpl();
     }
 
     @Before
@@ -50,7 +54,10 @@ public class ReservationServiceImplTest {
         when(mockRepo.findAll()).thenReturn(this.reservationList);
         when(mockRepo.findAllByDateAndTime(date, time)).thenReturn(null);
         when(mockRepo.countAllByDateAndTime(this.date, this.time)).thenReturn(this.randomNumber);
-        this.service = new ReservationServiceImpl(mockRepo, mockCustomerRepository, filter);
+        this.service = new ReservationServiceImpl(mockRepo,
+                mockCustomerRepository,
+                filter,
+                crudHelper);
     }
 
     @Test

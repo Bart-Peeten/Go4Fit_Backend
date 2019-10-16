@@ -1,5 +1,6 @@
 package be.appelicious.services;
 
+import be.appelicious.Helpers.RoleHelper;
 import be.appelicious.domain.Reservation;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CrudHelper;
@@ -7,6 +8,7 @@ import be.appelicious.interfaces.Filters;
 import be.appelicious.interfaces.ReservationService;
 import be.appelicious.repositories.CustomerRepository;
 import be.appelicious.repositories.ReservationRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Bart Peeten
@@ -89,13 +90,13 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional(readOnly = true)
     public List<List<String>> getReservationNamesForGivenWeek(List<LocalDate> dates) {
         int index = 0;
-        String[][] timesOfWeekList = filltimes();
+        String[][] timesOfWeekList = crudHelper.filltimes();
         List<List<String>> reservationList = new ArrayList<>();
         for (LocalDate item : dates) {
             for (int i = 0; i < timesOfWeekList[index].length; i++) {
                 List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
                 if (!result.isEmpty()) {
-                    List<String> namesList = parseFullNames(result);
+                    List<String> namesList = crudHelper.parseFullNames(result);
                     reservationList.add(namesList);
                 } else {
                     List<String> emptyList = new ArrayList<>();
@@ -110,16 +111,40 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<List<String>> getCancellationNamesForGivenWeek(List<LocalDate> datesOfWeek) {
+        int index = 0;
+        String[][] timesOfWeekList = crudHelper.filltimes();
+        List<List<String>> cancellationList = new ArrayList<>();
+        for (LocalDate item : datesOfWeek) {
+            for (int i = 0; i < timesOfWeekList[index].length; i++) {
+                List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
+                if (!result.isEmpty()) {
+                    List<String> namesList = crudHelper.parseCancellationFullNames(result);
+                    cancellationList.add(namesList);
+                } else {
+                    List<String> emptyList = new ArrayList<>();
+                    emptyList.add(" ");
+                    cancellationList.add(emptyList);
+                }
+            }
+            index++;
+        }
+
+        return cancellationList;
+    }
+
+    @Override
     @Transactional
     public List<Integer> getReservationNumbersForGivenWeek(List<LocalDate> datesOfWeek) {
         int index = 0;
-        String[][] timesOfWeekList = filltimes();
+        String[][] timesOfWeekList = crudHelper.filltimes();
         List<Integer> reservationList = new ArrayList<>();
         for (LocalDate item : datesOfWeek) {
             for (int i = 0; i < timesOfWeekList[index].length; i++) {
                 List<Reservation> result = repo.findAllByDateAndTime(item, LocalTime.parse(timesOfWeekList[index][i]));
                 if (!result.isEmpty()) {
-                    List<String> namesList = parseFullNames(result);
+                    List<String> namesList = crudHelper.parseFullNames(result);
                     reservationList.add(namesList.size());
                 } else {
                     reservationList.add(0);
@@ -132,9 +157,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Boolean> getIsParticipantReserved(String firstname, String lastname, List<LocalDate> datesOfWeek) {
+    public List<Boolean> getIsParticipantReserved(String firstname,
+                                                  String lastname,
+                                                  List<LocalDate> datesOfWeek) {
+
         int index = 0;
-        String[][] timesOfWeekList = filltimes();
+        String[][] timesOfWeekList = crudHelper.filltimes();
         List<Boolean> isReservedList = new ArrayList<>();
         for (LocalDate item : datesOfWeek) {
             for (int i = 0; i < timesOfWeekList[index].length; i++) {
@@ -172,10 +200,6 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addNewReservation(Reservation reservation) {
         User userResult = null;
         List<User> newUser = reservation.getUsers();
-        // Set by default the RemovedReservation flag to false.
-        if (reservation.getUsers().size() == 1) {
-            reservation.getUsers().get(0).setRemovedReservation(false);
-        }
         Reservation reservationResult = repo.findByDateAndTime(reservation.getDate(), reservation.getTime());
         // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
         if (reservationResult == null) {
@@ -194,17 +218,20 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time) {
+    @Secured({RoleHelper.ADMIN, RoleHelper.USER})
+    public Reservation addNewReservationWithOnlyFullName(String firstname,
+                                                         String lastname,
+                                                         LocalDate date,
+                                                         LocalTime time) {
         List<User> userList = new ArrayList<>();
         User newUser = customerRepository.findByFirstNameAndLastName(firstname, lastname);
         if (newUser != null) {
-            // By default set the RemovedReservation to false.
-            newUser.setRemovedReservation(false);
             userList.add(newUser);
         }
 
         Reservation reservationResult = repo.findByDateAndTime(date, time);
-        // If the result is null, this means this reservation is not yet existing so the reservation can be saved as is.
+        // If the result is null, this means this reservation is not yet existing
+        // so the reservation can be saved as is.
         if (reservationResult == null) {
             Reservation newReservation = new Reservation();
             newReservation.setDate(date);
@@ -212,16 +239,25 @@ public class ReservationServiceImpl implements ReservationService {
             newReservation.setUsers(userList);
             return repo.save(newReservation);
         } else {
-            if (!crudHelper.isAlreadyReserved(newUser, reservationResult))
-            reservationResult.getUsers().add(newUser);
+            // First check if the user already made a reservation
+            // else don't save.
+            if (!crudHelper.isAlreadyReserved(newUser, reservationResult)) {
+                reservationResult.getUsers().add(newUser);
+            }
             return repo.save(reservationResult);
         }
     }
 
+
     @Override
     @Transactional
-    public Reservation removeUserFromReservation(String firstname, String lastname, LocalDate date, LocalTime time, String isAllowed) {
-        boolean isAllowedToRemoveReservation = Boolean.valueOf(isAllowed);
+    @Secured({RoleHelper.ADMIN, RoleHelper.USER})
+    public Reservation removeUserFromReservation(String firstname,
+                                                 String lastname,
+                                                 LocalDate date,
+                                                 LocalTime time,
+                                                 String isAllowed) {
+        boolean isAllowedToRemoveReservation = Boolean.parseBoolean(isAllowed);
         // First get reservation for given date and time.
         Reservation reservationResult = repo.findByDateAndTime(date, time);
 
@@ -239,23 +275,50 @@ public class ReservationServiceImpl implements ReservationService {
 
         // If the user is allowed to delete his reservation.
         if (isAllowedToRemoveReservation) {
-            // Create another array
-            List<User> tmpArray = new ArrayList<>();
-            /* Copy the elements except the index
-               from original array to the other array
-             */
-            for (int i = 0; i < reservationResult.getUsers().size(); i++) {
-                if (i == index) {
-                    continue;
-                }
-                tmpArray.add(reservationResult.getUsers().get(i));
-            }
-            reservationResult.setUsers(tmpArray);
+            setUsersForAllowedReservation(reservationResult, index);
+        } else if (!isAllowedToRemoveReservation) {
+            setUsersIfIsNotAllowedForReservation(reservationResult, index);
         } else {
-            reservationResult.getUsers().get(index).setRemovedReservation(true);
+            reservationResult.getUsers();
         }
 
         return repo.save(reservationResult);
+    }
+
+    private void setUsersForAllowedReservation(Reservation reservationResult, int index) {
+        // Create another array
+        List<User> tmpArray = new ArrayList<>();
+            /* Copy the elements except the index
+               from original array to the other array
+             */
+        for (int i = 0; i < reservationResult.getUsers().size(); i++) {
+            if (i == index) {
+                continue;
+            }
+            tmpArray.add(reservationResult.getUsers().get(i));
+        }
+        reservationResult.setUsers(tmpArray);
+    }
+
+    private void setUsersIfIsNotAllowedForReservation(Reservation reservationResult, int index) {
+        // First copy the reservation result to a tmp object.
+        Reservation tmpReservation = new Reservation();
+        tmpReservation.setUsers(reservationResult.getUsers());
+        tmpReservation.setDate(reservationResult.getDate());
+        tmpReservation.setTime(reservationResult.getTime());
+        tmpReservation.setId(reservationResult.getId());
+
+        setUsersForAllowedReservation(reservationResult, index);
+
+        // Loop over the reservation result and save the user on
+        // index to the cancellation object.
+        List<User> tmpUserArray = new ArrayList<>();
+        for (int i = 0; i < tmpReservation.getUsers().size(); i++) {
+            if (i == index) {
+                tmpUserArray.add(tmpReservation.getUsers().get(i));
+            }
+        }
+        reservationResult.setCancelledUsers(tmpUserArray);
     }
 
     private int getIndex(String firstname, String lastname, Reservation reservationResult) {
@@ -270,29 +333,5 @@ public class ReservationServiceImpl implements ReservationService {
         User result = customerRepository.findByEmail(user.getEmail());
 
         return result.getUserId();
-    }
-
-    private List<String> parseFullNames(List<Reservation> result) {
-        List<String> tmpList = new ArrayList<>();
-        result.forEach(item -> {
-            List<User> userList = item.getUsers();
-            userList.forEach(user -> {
-                String fullName = user.getFirstName() + " " + user.getLastName();
-                tmpList.add(fullName);
-            });
-        });
-
-        return tmpList;
-    }
-
-    private String[][] filltimes() {
-        String tuesday[] = {"19:00", "20:00"};
-        String wednesday[] = {"09:00", "19:00", "20:00"};
-        String thursday[] = {"19:00"};
-        String sunday[] = {"08:00", "09:00", "10:00"};
-
-        String[][] tmpArray = new String[][]{tuesday, wednesday, thursday, sunday};
-
-        return tmpArray;
     }
 }

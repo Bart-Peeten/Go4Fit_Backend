@@ -46,7 +46,7 @@ public class CustomerController {
     @GetMapping(path = &quot;/login&quot;)
     public ResponseEntity&lt;User&gt; doesUserExist(@RequestParam String useremail,
                                               @RequestParam String userPassword) {
-<span class="nc" id="L49">        User result = service.findByEmail(useremail);</span>
+<span class="nc" id="L49">        User result = service.findByEmail(useremail, userPassword);</span>
 <span class="nc bnc" id="L50" title="All 2 branches missed.">        if (result != null) {</span>
 <span class="nc" id="L51">            return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
         } else {
@@ -55,12 +55,12 @@ public class CustomerController {
     }
 
     @GetMapping(path = &quot;/admin&quot;)
-    public ResponseEntity&lt;Boolean&gt; isUserAdmin(@RequestParam String useremail,
+    public ResponseEntity&lt;User&gt; isUserAdmin(@RequestParam String useremail,
                                                @RequestParam String userPassword) {
-<span class="nc" id="L60">        User result = service.findByEmail(useremail);</span>
+<span class="nc" id="L60">        User result = service.findByEmail(useremail, userPassword);</span>
 <span class="nc bnc" id="L61" title="All 2 branches missed.">        if (result != null) {</span>
 <span class="nc bnc" id="L62" title="All 2 branches missed.">            if (result.getRole().equals(&quot;ROLE_ADMIN&quot;)) {</span>
-<span class="nc" id="L63">                return new ResponseEntity&lt;&gt;(true, HttpStatus.OK);</span>
+<span class="nc" id="L63">                return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);</span>
             } else {
 <span class="nc" id="L65">                return new ResponseEntity&lt;&gt;(HttpStatus.FORBIDDEN);</span>
             }

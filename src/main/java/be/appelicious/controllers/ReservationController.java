@@ -60,10 +60,10 @@ public class ReservationController {
     @GetMapping(path = "/numberofreservations")
     public ResponseEntity<Long> getNumberOfReservationByDateAndTime(@RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                            LocalDate date,
+                                                                    LocalDate date,
                                                                     @RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                            LocalTime time) {
+                                                                    LocalTime time) {
         Long result = service.getNumberOfReservations(date, time);
 
         return new ResponseEntity<Long>(result, HttpStatus.OK);
@@ -75,10 +75,10 @@ public class ReservationController {
     @GetMapping(path = "/names")
     public ResponseEntity<List<String>> getNamesFromReservationByDateAndTime(@RequestParam
                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                     LocalDate date,
+                                                                             LocalDate date,
                                                                              @RequestParam
                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                                     LocalTime time) {
+                                                                             LocalTime time) {
         return new ResponseEntity<>(service.getNamesFromReservationByDateAndTime(date, time),
                 HttpStatus.OK);
     }
@@ -92,9 +92,25 @@ public class ReservationController {
     @GetMapping(path = "/weekusers")
     public ResponseEntity<List<List<String>>> getReservationNamesForGivenWeek(@RequestParam
                                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                      List<LocalDate> datesOfWeek) {
+                                                                              List<LocalDate> datesOfWeek) {
         List<List<String>> result = new ArrayList<>();
         result = service.getReservationNamesForGivenWeek(datesOfWeek);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * Endpoint to GET all cancellations for a given week
+     *
+     * @param datesOfWeek
+     * @return List with Reservations of the given week.
+     */
+    @GetMapping(path = "/cancellations")
+    public ResponseEntity<List<List<String>>> getCancellationNamesForGivenWeek(@RequestParam
+                                                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                                      List<LocalDate> datesOfWeek) {
+        List<List<String>> result = new ArrayList<>();
+        result = service.getCancellationNamesForGivenWeek(datesOfWeek);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -108,7 +124,7 @@ public class ReservationController {
     @GetMapping(path = "/weekreservaties")
     public ResponseEntity<List<Integer>> getReservationNumbersForGivenWeek(@RequestParam
                                                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                   List<LocalDate> datesOfWeek) {
+                                                                           List<LocalDate> datesOfWeek) {
         List<Integer> result = new ArrayList<>();
         result = service.getReservationNumbersForGivenWeek(datesOfWeek);
 
@@ -128,7 +144,7 @@ public class ReservationController {
                                                                                @RequestParam String lastname,
                                                                                @RequestParam
                                                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                       List<LocalDate> datesOfWeek) {
+                                                                               List<LocalDate> datesOfWeek) {
         List<Boolean> result = service.getIsParticipantReserved(firstname, lastname, datesOfWeek);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -137,7 +153,7 @@ public class ReservationController {
     @GetMapping(path = "/date")
     public ResponseEntity<List<Reservation>> getReservationsByDate(@RequestParam("date")
                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                           LocalDate date) {
+                                                                   LocalDate date) {
 
         return new ResponseEntity<>(service.getReservationByDate(date), HttpStatus.OK);
     }
@@ -145,10 +161,10 @@ public class ReservationController {
     @GetMapping(path = "/date_time")
     public ResponseEntity<List<Reservation>> getReservationByDateAndTime(@RequestParam
                                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                                                                 LocalDate date,
+                                                                         LocalDate date,
                                                                          @RequestParam
                                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-                                                                                 LocalTime time) {
+                                                                         LocalTime time) {
         return new ResponseEntity<>(service.getReservationsByDateAndTime(date, time),
                 HttpStatus.OK);
     }
@@ -187,9 +203,9 @@ public class ReservationController {
     }
 
     /**
-     * Endpoint to DELETE a new reservation
+     * Endpoint to remove (PUT) a reservation for a user.
      */
-    @DeleteMapping(path = "/delete")
+    @PutMapping(path = "/delete")
     public ResponseEntity<Reservation> removeUserFromReservation(@RequestParam String firstname,
                                                                  @RequestParam String lastname,
                                                                  @RequestParam

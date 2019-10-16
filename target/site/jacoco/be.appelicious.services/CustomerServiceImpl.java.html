@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Go4Fit</a> &gt; <a href="index.source.html" class="el_package">be.appelicious.services</a> &gt; <span class="el_source">CustomerServiceImpl.java</span></div><h1>CustomerServiceImpl.java</h1><pre class="source lang-java linenums">package be.appelicious.services;
 
+import be.appelicious.Helpers.RoleHelper;
 import be.appelicious.domain.User;
 import be.appelicious.interfaces.CustomerService;
 import be.appelicious.repositories.CustomerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,37 +18,44 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Logger logger;
 
-<span class="nc" id="L18">    public CustomerServiceImpl(CustomerRepository customerRepository) {</span>
-<span class="nc" id="L19">        this.customerRepository = customerRepository;</span>
-<span class="nc" id="L20">        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();</span>
-<span class="nc" id="L21">    }</span>
+<span class="nc" id="L23">    public CustomerServiceImpl(CustomerRepository customerRepository) {</span>
+<span class="nc" id="L24">        this.customerRepository = customerRepository;</span>
+<span class="nc" id="L25">        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();</span>
+<span class="nc" id="L26">        this.logger = LoggerFactory.getLogger(CustomerServiceImpl.class);</span>
+<span class="nc" id="L27">    }</span>
 
     @Override
     public List&lt;User&gt; getAllUsers() {
-<span class="nc" id="L25">        return customerRepository.findAll();</span>
+<span class="nc" id="L31">        return customerRepository.findAll();</span>
     }
 
     @Override
     public User save(User user) {
-<span class="nc" id="L30">        user.setFirstName(user.getFirstName().trim());</span>
-<span class="nc" id="L31">        user.setLastName(user.getLastName().trim());</span>
+<span class="nc" id="L36">        user.setFirstName(user.getFirstName().trim());</span>
+<span class="nc" id="L37">        user.setLastName(user.getLastName().trim());</span>
 
-<span class="nc" id="L33">        return customerRepository.save(user);</span>
+<span class="nc" id="L39">        return customerRepository.save(user);</span>
     }
 
     @Override
-    public User findByEmail(String email) {
-<span class="nc" id="L38">        return customerRepository.findByEmail(email);</span>
+    @Secured({RoleHelper.ADMIN, RoleHelper.USER})
+    public User findByEmail(String email, String password) {
+<span class="nc" id="L45">        logger.info(&quot;De gebruiker met  {} probeert aan te melden met passwoord {}.&quot;, email, password);</span>
+<span class="nc" id="L46">        User result  = customerRepository.findByEmail(email);</span>
+
+<span class="nc" id="L48">        return result;</span>
     }
 
     @Override
-    @Secured(&quot;ROLE_ADMIN&quot;)
+    @Secured(RoleHelper.ADMIN)
+    @Transactional
     public boolean removeUser(String firstname, String lastname) {
-<span class="nc" id="L44">        int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);</span>
+<span class="nc" id="L55">        int isremoved = customerRepository.deleteByFirstNameAndLastName(firstname, lastname);</span>
 
         // If isRemoved is greater then 0 then there is a user deleted, so return true else return false.
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        return isremoved &gt; 0;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        return isremoved &gt; 0;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

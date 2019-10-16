@@ -24,4 +24,6 @@ public interface ReservationService {
     List<Integer> getReservationNumbersForGivenWeek(List<LocalDate> datesOfWeek);
     Reservation addNewReservationWithOnlyFullName(String firstname, String lastname, LocalDate date, LocalTime time);
     List<Boolean> getIsParticipantReserved(String firstname, String lastname, List<LocalDate> datesOfWeek);
+
+    List<List<String>> getCancellationNamesForGivenWeek(List<LocalDate> datesOfWeek);
 }
