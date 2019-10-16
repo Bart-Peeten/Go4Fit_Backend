@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Secured({RoleHelper.ADMIN, RoleHelper.USER})
+    // @Secured({RoleHelper.ADMIN, RoleHelper.USER})
     public User findByEmail(String email, String password) {
         logger.info("De gebruiker met  {} probeert aan te melden.", email);
         User result  = customerRepository.findByEmail(email);
